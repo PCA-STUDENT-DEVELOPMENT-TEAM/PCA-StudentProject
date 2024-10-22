@@ -24,11 +24,11 @@ class UserRoleMiddleware
             return $next($request);
         }
 
-        if(Auth::user()->user_level === "admin"){
+        if(Auth::user()->user_level === 2){
             return redirect()->route('admin.dashboard');
         }
 
-        if(Auth::user()->user_level === "employee"){
+        if(Auth::user()->user_level === 1){
             return redirect()->route('employee.dashboard');
         }
         

@@ -138,7 +138,7 @@ function addSSL() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("ssl.store"), {
+        post(route("store.ssl"), {
             onSuccess: (response) => {
                 alert(response);
             },
