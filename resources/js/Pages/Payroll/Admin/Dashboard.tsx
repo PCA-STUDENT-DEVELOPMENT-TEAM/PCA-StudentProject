@@ -30,6 +30,7 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { AdminLinks } from "@/lib/payrollData";
+import PCATable from "@/Components/PCATable";
 
 type recentPayrolls = {
     period: string;
@@ -224,13 +225,12 @@ export default function Dashboard() {
                     <div>
                         <BodyContentLayout
                             headerName="Recent Payrolls"
-                            className=" mt-5 h-fit shadow-md"
+                            className=" mt-5 h-[550px] shadow-md"
                         >
-                            <DataTable
+                            <PCATable
                                 columns={rpcolumns}
-                                rowStyle="odd:bg-white even:bg-transparent text-center"
                                 table={rpTable}
-                                className="lg:h-[450px]"
+                                pagination={false}
                             />
                         </BodyContentLayout>
                     </div>

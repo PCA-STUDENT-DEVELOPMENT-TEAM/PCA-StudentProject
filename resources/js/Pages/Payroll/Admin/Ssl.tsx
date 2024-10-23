@@ -1,5 +1,5 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
     ColumnDef,
@@ -8,26 +8,11 @@ import {
     useReactTable,
     getFilteredRowModel,
 } from "@tanstack/react-table";
-import { DataTable } from "@/Components/DataTable";
+
 import { useState } from "react";
 import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
-import {
-    ChevronLeft,
-    ChevronRight,
-    FolderDown,
-    FolderUp,
-    MoreHorizontal,
-    PlusIcon,
-} from "lucide-react";
+import { FolderDown, FolderUp, MoreHorizontal, PlusIcon } from "lucide-react";
 
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-} from "@/Components/ui/pagination";
 import {
     SslDelete,
     SslStore,
@@ -37,18 +22,8 @@ import DialogMenu from "@/Components/Dialog";
 import DropdownDialog from "../../../Components/DropdownDialog";
 import { cn } from "@/lib/utils";
 import { AdminLinks } from "@/lib/payrollData";
-
-type sslProfile = {
-    salary_grade: number;
-    step1: number;
-    step2: number;
-    step3: number;
-    step4: number;
-    step5: number;
-    step6: number;
-    step7: number;
-    step8: number;
-};
+import { sslProfile } from "@/types/payroll";
+import Table from "@/Components/PCATable";
 
 const columns: ColumnDef<sslProfile>[] = [
     {
@@ -154,7 +129,7 @@ const Ssl = () => {
         getPaginationRowModel: getPaginationRowModel(),
         initialState: {
             pagination: {
-                pageSize: 10,
+                pageSize: 12,
             },
         },
         getFilteredRowModel: getFilteredRowModel(),
@@ -167,120 +142,68 @@ const Ssl = () => {
 
     const [openDialog, setOpenDialog] = useState(false);
     return (
-        <div>
-            <AuthenticatedLayoutAdmin title="SSL" links={AdminLinks}>
-                <BodyContentLayout
-                    headerName="SSL"
-                    className="h-[800px]"
-                    contentStyle="h-[650px]"
-                >
-                    <div className="h-full">
-                        <div className="mb-5 flex gap-5 ">
-                            <Input
-                                type="search"
-                                onChange={(e) =>
-                                    setGlobalFilter(e.target.value || "")
-                                }
-                                className="w-1/4 rounded-pca"
-                                placeholder="Search...."
-                            />
-                            <div>
-                                {/* Dialog Component Usage : 
+        <AuthenticatedLayoutAdmin title="SSL" links={AdminLinks}>
+            <div className=" w-full h-full flex flex-col flex-grow">
+                <div className=" h-fit flex gap-5 w-full mb-5">
+                    <Input
+                        type="search"
+                        onChange={(e) => setGlobalFilter(e.target.value || "")}
+                        className="w-1/4 rounded-pca"
+                        placeholder="Search...."
+                    />
+                    <div>
+                        {/* Dialog Component Usage : 
                                 props : 
                                 trigger (React Node type) required
                                 title string optional
                                 description string optional
                                 children react node optional
                                   */}
-                                <DialogMenu
-                                    open={openDialog}
-                                    openDialog={() =>
-                                        setOpenDialog(!openDialog)
-                                    }
-                                    trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
-                                            <PlusIcon className="mr-2 h-6 w-auto" />
-                                            New SSL Profile
-                                        </section>
-                                    }
-                                    title="New SSL Profile"
-                                    description="Add New SSL Profile"
-                                >
-                                    <SslStore
-                                        openDialog={() =>
-                                            setOpenDialog(!openDialog)
-                                        }
-                                    />
-                                </DialogMenu>
-                            </div>
-
-                            <div>
-                                <DialogMenu
-                                    trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
-                                            <FolderDown className="mr-2 h-6 w-auto" />
-                                            Import SSL
-                                        </section>
-                                    }
-                                    title="Feature Under Development"
-                                />
-                            </div>
-
-                            <div>
-                                <DialogMenu
-                                    trigger={
-                                        <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
-                                            <FolderUp className="mr-2 h-6 w-auto" />
-                                            Export SSL
-                                        </section>
-                                    }
-                                    title="Feature Under Development"
-                                />
-                            </div>
-                        </div>
-                        <DataTable
-                            columns={columns}
-                            rowStyle="odd:bg-white even:bg-transparent text-center"
-                            table={table}
-                        ></DataTable>
-                        <Pagination className="flex justify-end items-end">
-                            <PaginationContent>
-                                <PaginationItem>
-                                    <Button
-                                        onClick={table.previousPage}
-                                        className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                        disabled={!table.getCanPreviousPage()}
-                                    >
-                                        <ChevronLeft className="pr-1" />
-                                        Previous
-                                    </Button>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationLink>
-                                        {table.getState().pagination.pageIndex +
-                                            1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                                <PaginationItem>
-                                    <PaginationEllipsis />
-                                </PaginationItem>
-                                <Button
-                                    onClick={table.nextPage}
-                                    className="bg-transparent text-black hover:bg-transparent w-30 p-2"
-                                    disabled={!table.getCanNextPage()}
-                                >
-                                    Next
-                                    <ChevronRight className="pl-1" />
-                                </Button>
-                            </PaginationContent>
-                        </Pagination>
+                        <DialogMenu
+                            open={openDialog}
+                            openDialog={() => setOpenDialog(!openDialog)}
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <PlusIcon className="mr-2 h-6 w-auto" />
+                                    New SSL Profile
+                                </section>
+                            }
+                            title="New SSL Profile"
+                            description="Add New SSL Profile"
+                        >
+                            <SslStore
+                                openDialog={() => setOpenDialog(!openDialog)}
+                            />
+                        </DialogMenu>
                     </div>
-                </BodyContentLayout>
-            </AuthenticatedLayoutAdmin>
-        </div>
+
+                    <div>
+                        <DialogMenu
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <FolderDown className="mr-2 h-6 w-auto" />
+                                    Import SSL
+                                </section>
+                            }
+                            title="Feature Under Development"
+                        />
+                    </div>
+
+                    <div>
+                        <DialogMenu
+                            trigger={
+                                <section className="flex items-center justify-center bg-secondaryGreen p-2 text-white rounded-pca pl-3 pr-3">
+                                    <FolderUp className="mr-2 h-6 w-auto" />
+                                    Export SSL
+                                </section>
+                            }
+                            title="Feature Under Development"
+                        />
+                    </div>
+                </div>
+                <Table columns={columns} table={table} />
+            </div>
+        </AuthenticatedLayoutAdmin>
     );
 };
 

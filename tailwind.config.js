@@ -13,9 +13,7 @@ export default {
 
     theme: {
     	extend: {
-			borderRadius: {
-				'pca' : '10px'
-			},
+
     		width: {
     			'popover-trigger': 'var(--radix-popover-trigger-width)',
 				'sidebar-open' : 'calc(100vw - 16rem)',
@@ -33,7 +31,8 @@ export default {
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
-    			sm: 'calc(var(--radius) - 4px)'
+    			sm: 'calc(var(--radius) - 4px)',
+				pca : '10px'
     		},
     		colors: {
     			baseGreen: '#0E4736',

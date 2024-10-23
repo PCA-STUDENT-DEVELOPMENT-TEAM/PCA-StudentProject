@@ -19,41 +19,59 @@ import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import { AdminLinks } from "@/lib/payrollData";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import DropdownDialog from "@/Components/DropdownDialog";
+import { formatColumnTypes } from "@/types/payroll";
 
-type columnTypes = {
-    type: string;
-    description: string;
-};
-
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<formatColumnTypes>[] = [
     { accessorKey: "type", header: "Signatory Type" },
     { accessorKey: "description", header: "Signatory Description" },
     {
         id: "actions",
         cell: ({ row }) => {
-            const values = row.original;
+            const [openDialog, setOpenDialog] = useState<string | null>(null);
+            const rowData = row.original;
+            const dialogs = [
+                {
+                    tag: "1",
+                    name: "Edit",
+                    dialogtitle: cn("Editing Salary Grade ", rowData),
+                },
+                {
+                    tag: "2",
+                    name: "Delete",
+                    dialogtitle: cn(
+                        "Are you sure you want to delete Salary Grade",
+                        rowData,
+                        "?"
+                    ),
+                    style: "text-red-600",
+                },
+            ];
+
             return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                <div>
+                    <DropdownDialog
+                        openDialog={openDialog}
+                        setOpenDialog={setOpenDialog}
+                        dialogs={dialogs}
+                        trigger={
+                            <>
+                                <section>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </section>
+                            </>
+                        }
+                    ></DropdownDialog>
+                </div>
             );
         },
     },
 ];
 
 export default function Formats() {
-    const data: columnTypes[] = Data;
+    const data: formatColumnTypes[] = Data;
 
     const table = useReactTable({
         data,
