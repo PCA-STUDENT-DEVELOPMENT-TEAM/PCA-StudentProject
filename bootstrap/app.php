@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SSLInputLimit;
 use App\Http\Middleware\UserRoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,9 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \App\Http\Middleware\SSLInputLimit::class,
         ]);
+
+        
         $middleware->alias([
-            'usercheck' => UserRoleMiddleware::class
+            'usercheck' => UserRoleMiddleware::class,
+            'sslinputlimit' => SSLInputLimit::class,
         ]);
 
         //
