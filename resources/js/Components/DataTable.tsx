@@ -44,10 +44,8 @@ export function DataTable<TData, TValue>({
         // Link On Click for Add Button
         // Optimize Pagination : Possibly Use Manual Pagination
         <div className="h-full">
-            <div
-                className={cn("rounded-[5px] border shadow-md overflow-hidden")}
-            >
-                <Table className={cn("bg-baseGrey h-full ", className)}>
+            <div className={cn("rounded-pca border overflow-hidden")}>
+                <Table className={cn("bg-transparent", className)}>
                     <TableHeader className={headerStyle}>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>

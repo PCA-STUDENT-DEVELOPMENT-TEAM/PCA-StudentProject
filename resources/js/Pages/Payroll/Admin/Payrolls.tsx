@@ -27,7 +27,7 @@ import {
 } from "@/Components/ui/select";
 import { DatePickerWithRange } from "@/Components/DateRangePicker";
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Button } from "@/Components/ui/button";
 import {
@@ -38,23 +38,12 @@ import {
     DialogTrigger,
 } from "@/Components/ui/dialog";
 import { AdminLinks } from "@/lib/payrollData";
+import { payrollsColumnTypes } from "@/types/payroll";
 
 //  Set accepted column types
 
-type columnTypes = {
-    name: string;
-    rate: number;
-    quantity: number;
-    type: string;
-    position: string;
-    tardiness: number;
-    compensation: number;
-    deduction: number;
-    gross_amount: number;
-};
-
 // Generate the headers for the columns
-const columns: ColumnDef<columnTypes>[] = [
+const columns: ColumnDef<payrollsColumnTypes>[] = [
     { accessorKey: "name", header: "Name" },
     { accessorKey: "rate", header: "Rate" },
     { accessorKey: "quantity", header: "Quantity" },
@@ -91,7 +80,7 @@ const columns: ColumnDef<columnTypes>[] = [
 ];
 
 export default function Payrolls() {
-    const data: columnTypes[] = Data;
+    const data: payrollsColumnTypes[] = Data;
 
     const table = useReactTable({
         data,
@@ -109,6 +98,7 @@ export default function Payrolls() {
         from: new Date(),
         to: addDays(new Date(), 20),
     });
+
     return (
         <AuthenticatedLayoutAdmin title="Payrolls" links={AdminLinks}>
             <BodyContentLayout headerName={"Payrolls List"}>
@@ -120,11 +110,11 @@ export default function Payrolls() {
                                     <SelectValue placeholder="All" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">
+                                    <SelectItem value="All">All</SelectItem>
+                                    <SelectItem value="Regular">
                                         Regular
                                     </SelectItem>
+                                    <SelectItem value="Flex">Flexi</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
