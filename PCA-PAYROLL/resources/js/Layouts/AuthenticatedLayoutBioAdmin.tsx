@@ -62,27 +62,27 @@ export default function Authenticated({
             items: [
                 {
                     label: "Dashboard",
-                    url: "admin.dashboardb",
+                    url: "bioadmin.dashboard",
                     icon: LayoutDashboard,
                 },
                 {
                     label: "Attendance List",
-                    url: "admin.attendancelist",
+                    url: "bioadmin.attendancelists",
                     icon: Users,
                 },
                 {
                     label: "Attendance Records",
-                    url: "admin.attendancerecords",
+                    url: "bioadmin.attendancerecords",
                     icon: Files,
                 },
                 {
                     label: "Manage Users",
-                    url: "admin.manageusers",
+                    url: "bioadmin.manageusers",
                     icon: Users,
                 },
             ],
         },
-       
+
     ];
 
     // State para sa collapsabe navbar
@@ -100,8 +100,6 @@ export default function Authenticated({
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
-                            {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
-                            <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="scrollbar-track-rounded scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden pl-5">
                                 {/* Diri mag generate ug mga groups sa navagation bar. Mao ni nga map mag generate sa mga title*/}

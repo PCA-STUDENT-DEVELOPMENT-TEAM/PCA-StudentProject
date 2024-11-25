@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\AdminPageController;
 use App\Http\Controllers\BioAdminPageController;
+use App\Http\Controllers\Biometric\DashboardController;
+use App\Http\Controllers\Biometric\AttendanceListController;
+use App\Http\Controllers\Biometric\AttendanceRecordController;
+use App\Http\Controllers\Biometric\ManageUserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,63 +21,82 @@ Route::get('/', function () {
 });
 
 
-// Route for storing SSL data
-Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
+// // Route for storing SSL data
+// Route::post('/admin/ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
 
-Route::get('/admin/dashboard', function () {
-    return Inertia::render('Admin/Dashboard');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboard');
+// Route::get('/admin/dashboard', function () {
+//     return Inertia::render('Admin/Dashboard');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboard');
 
-Route::get('/admin/salary', function () {
-    return Inertia::render('Admin/Salary');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.salary');
+// Route::get('/admin/salary', function () {
+//     return Inertia::render('Admin/Salary');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.salary');
 
-Route::get('/admin/benefits', function () {
-    return Inertia::render('Admin/Benefits');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.benefits');
+// Route::get('/admin/benefits', function () {
+//     return Inertia::render('Admin/Benefits');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.benefits');
 
-Route::get('/admin/loans', function () {
-    return Inertia::render('Admin/Loans');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.loans');
+// Route::get('/admin/loans', function () {
+//     return Inertia::render('Admin/Loans');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.loans');
 
-Route::get('/admin/records', function () {
-    return Inertia::render('Admin/Records');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.records');
+// Route::get('/admin/records', function () {
+//     return Inertia::render('Admin/Records');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.records');
 
-Route::get('/admin/designations', function () {
-    return Inertia::render('Admin/Designations');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.designations');
+// Route::get('/admin/designations', function () {
+//     return Inertia::render('Admin/Designations');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.designations');
 
-Route::get('/admin/compensations', function () {
-    return Inertia::render('Admin/Compensations');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.compensations');
+// Route::get('/admin/compensations', function () {
+//     return Inertia::render('Admin/Compensations');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.compensations');
 
-Route::get('/admin/deductions', function () {
-    return Inertia::render('Admin/Deductions');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
+// Route::get('/admin/deductions', function () {
+//     return Inertia::render('Admin/Deductions');
+// })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
 ////////////////////////////////bio routes
+Route::domain('biometric.' . env('APP_URL'))->group(
+    function () {
+        Route::middleware(['auth'])->group(
+            function () {
+                // Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+                Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
+                Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
+                Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
+            }
+        );
+    }
+);
+// Route::prefix('admin')->group(function () {
+//     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+// });
 
-Route::get('/bioadmin/dashboard', function () {
-    return Inertia::render('BioAdmin/Dashboard');
-})->middleware(['auth'])->name('admin.dashboardb');
+// Route::prefix('bioadmin')->middleware(['auth'])->group(function () {
+//     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+//     Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
+//     Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
+//     Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
+// });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('BioAdmin/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+    Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
+    Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
+    Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
+});
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
 
-Route::get('/bioadmin/attendancelist', function () {
-    return Inertia::render('BioAdmin/AttendanceList');
-})->middleware(['auth', 'verified'])->name('admin.attendancelist');
 
-Route::get('/bioadmin/attendancerecords', function () {
-    return Inertia::render('BioAdmin/AttendanceRecord');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancerecords');
 
-Route::get('/bioadmin/manageusers', function () {
-    return Inertia::render('BioAdmin/ManageUsers');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.manageusers');
 
+// Route::get(
+//     'dashboard',
+//     function () {
+//         return Inertia::render('BioAdmin/Dashboard');
+//     }
+// )->name('bioadmin.dashboard');
 
 // Empoyee Routes
 
@@ -122,10 +145,10 @@ Route::prefix('admin')->group(function () {
     Route::get('formats', [AdminPageController::class, 'format'])->name('admin.formats');
     Route::get('appointments', [AdminPageController::class, 'appointments'])->name('admin.appointments');
     //bioadmins
-    Route::get('dashboardb', [AdminPageController::class, 'dashboardb'])->name('admin.dashboardb');
-    Route::get('attendancelist', [AdminPageController::class, 'attendancelist'])->name('admin.attendancelist');
-    Route::get('attendancerecords', [AdminPageController::class, 'attendancerecords'])->name('admin.attendancerecords');
-    Route::get('manageusers', [AdminPageController::class, 'manageusers'])->name('admin.manageusers');
+    // Route::get('dashboardb', [AdminPageController::class, 'dashboardb'])->name('admin.dashboardb');
+    // Route::get('attendancelist', [AdminPageController::class, 'attendancelist'])->name('admin.attendancelist');
+    // Route::get('attendancerecords', [AdminPageController::class, 'attendancerecords'])->name('admin.attendancerecords');
+    // Route::get('manageusers', [AdminPageController::class, 'manageusers'])->name('admin.manageusers');
 
     // Route::get('ssl', [AdminPageController::class, 'ssl'])->name('admin.ssl');
     // Route::post('ssl/store', [AdminPageController::class, 'ssl_addData'])->name('store.ssl');
