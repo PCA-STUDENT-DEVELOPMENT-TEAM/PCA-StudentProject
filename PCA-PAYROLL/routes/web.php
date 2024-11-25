@@ -56,11 +56,15 @@ Route::get('/admin/deductions', function () {
 
 Route::get('/bioadmin/dashboard', function () {
     return Inertia::render('BioAdmin/Dashboard');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.dashboardb');
+})->middleware(['auth'])->name('admin.dashboardb');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('BioAdmin/Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/bioadmin/attendancelist', function () {
     return Inertia::render('BioAdmin/AttendanceList');
-})->middleware('auth', 'verified', 'usercheck:admin')->name('admin.attendancelist');
+})->middleware(['auth', 'verified'])->name('admin.attendancelist');
 
 Route::get('/bioadmin/attendancerecords', function () {
     return Inertia::render('BioAdmin/AttendanceRecord');
@@ -134,7 +138,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('ssl', [SSLController::class, 'index'])->name('admin.ssl');
     Route::post('ssl/store', [SSLController::class, 'store'])->name('store.ssl');
-    Route::put('/ssl/{salary_grade}', [SSLController::class,'update'])->name('update.ssl');
+    Route::put('/ssl/{salary_grade}', [SSLController::class, 'update'])->name('update.ssl');
 });
 
 

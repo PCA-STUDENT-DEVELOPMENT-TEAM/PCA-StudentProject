@@ -21,7 +21,7 @@ export default function Login({ status }: { status?: string }) {
         });
     };
 
-    console.log(usePage());
+    // console.log(usePage());
 
     return (
         <GuestLayout>

@@ -73,7 +73,7 @@ class AdminPageController extends Controller
     }
 
 
-    
+
 
     public function ssl(): Response
     {
