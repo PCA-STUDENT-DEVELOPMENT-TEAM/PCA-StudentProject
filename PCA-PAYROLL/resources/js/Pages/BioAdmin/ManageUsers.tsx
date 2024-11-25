@@ -38,7 +38,7 @@ const columns: ColumnDef<columnTypes>[] = [
   
 ];
 
-export default function Loans() {
+export default function Manageusers() {
   const data: columnTypes[] = Data;
 
   const table = useReactTable({

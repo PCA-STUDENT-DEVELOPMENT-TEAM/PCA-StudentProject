@@ -79,33 +79,33 @@ export default function Loans() {
             },
         },
     });
-    return (
-        <AuthenticatedLayoutAdmin
-            header={<h2>{usePage().component.split("/")[1]}</h2>}
-        >
-            <Head title="Loans" />
+   return (
+      <AuthenticatedLayoutAdmin
+          header={<h2>{usePage().component.split("/")[1]}</h2>}
+      >
+          <Head title="Loans" />
 
-            <BodyContentLayout headerName={"Loans"}>
-                <div className="flex  mb-5 gap-3">
-                    <Input
-                        type="text"
-                        placeholder="Search..."
-                        className="w-1/4 rounded-[10px]"
-                    />
+          <BodyContentLayout headerName={"Loans"}>
+              <div className="flex  mb-5 gap-3">
+                  <Input
+                      type="text"
+                      placeholder="Search..."
+                      className="w-1/4 rounded-[10px]"
+                  />
 
-                    <Button className="flex gap-1">
-                        <View size={20} />
-                        View Loan Types
-                    </Button>
-                </div>
-                <div>
-                    <DataTable
-                        columns={columns}
-                        table={table}
-                        rowStyle="odd:bg-white even:bg-transparent text-center"
-                    ></DataTable>
-                </div>
-            </BodyContentLayout>
-        </AuthenticatedLayoutAdmin>
-    );
+                  <Button className="flex gap-1">
+                      <View size={20} />
+                      View Loan Types
+                  </Button>
+              </div>
+              <div>
+                  <DataTable
+                      columns={columns}
+                      table={table}
+                      rowStyle="odd:bg-white even:bg-transparent text-center"
+                  ></DataTable>
+              </div>
+          </BodyContentLayout>
+      </AuthenticatedLayoutAdmin>
+  );
 }
