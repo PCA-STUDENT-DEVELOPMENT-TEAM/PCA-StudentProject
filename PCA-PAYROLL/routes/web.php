@@ -57,18 +57,18 @@ Route::get('/', function () {
 // })->middleware('auth', 'verified', 'usercheck:admin')->name('admin.deductions');
 
 ////////////////////////////////bio routes
-Route::domain('biometric.' . env('APP_URL'))->group(
-    function () {
-        Route::middleware(['auth'])->group(
-            function () {
-                // Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
-                Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
-                Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
-                Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
-            }
-        );
-    }
-);
+// Route::domain('biometric.' . env('APP_URL'))->group(
+//     function () {
+//         Route::middleware(['auth'])->group(
+//             function () {
+//                 // Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
+//                 Route::get('attendancelist', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelist');
+//                 Route::get('attendancerecord', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecord');
+//                 Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
+//             }
+//         );
+//     }
+// );
 // Route::prefix('admin')->group(function () {
 //     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
 // });
@@ -80,7 +80,7 @@ Route::domain('biometric.' . env('APP_URL'))->group(
 //     Route::get('manageuser', [AttendanceRecordController::class, 'index'])->name('bioadmin.manageuser');
 // });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'usercheck:bioadmin'])->group(function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
     Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
     Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
@@ -134,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'usercheck:admin'])->group(function () {
     Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
     Route::get('payrolls', [AdminPageController::class, 'payrolls'])->name('admin.payrolls');
     Route::get('loans', [AdminPageController::class, 'loans'])->name('admin.loans');

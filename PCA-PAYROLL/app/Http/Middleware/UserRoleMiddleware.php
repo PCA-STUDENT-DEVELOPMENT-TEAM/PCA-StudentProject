@@ -15,7 +15,7 @@ class UserRoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next,string $role): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
         // if (!Auth::check()) {
         //     return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access']);
@@ -24,27 +24,23 @@ class UserRoleMiddleware
             return $next($request);
         }
 
-        if(Auth::user()->user_level === "admin"){
+        if (Auth::user()->user_level === "admin") {
             return redirect()->route('admin.dashboard');
         }
 
-        if(Auth::user()->user_level === "employee"){
+        if (Auth::user()->user_level === "employee") {
             return redirect()->route('employee.dashboard');
         }
-        
-        if(Auth::user()->user_level === "bioemployee"){
+
+        if (Auth::user()->user_level === "bioemployee") {
             return redirect()->route('bioemployee.dashboard');
         }
-        
-        if(Auth::user()->user_level === "bioadmin"){
+
+        if (Auth::check() && Auth::user()->user_level === "bioadmin") {
             return redirect()->route('bioadmin.dashboard');
         }
-        
+
         // Redirect if user is not authorized
         return redirect()->route('login')->withErrors(['access_denied' => 'Unauthorized access.']);
-
-
-
-        
     }
 }

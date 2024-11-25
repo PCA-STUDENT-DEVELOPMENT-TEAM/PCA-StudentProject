@@ -185,7 +185,7 @@ export default function Authenticated({
                                     </DropdownMenuItem>
                                     <DropdownMenuItem>
                                         <Link
-                                            href="#"
+                                            href={route("logout")}
                                             className="flex"
                                             method={"post"}
                                         >

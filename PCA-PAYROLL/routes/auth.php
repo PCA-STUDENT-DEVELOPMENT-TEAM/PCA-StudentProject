@@ -45,3 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
+
+Route::middleware(['usercheck:guest'])->group(function () {
+    Route::get('/{any}', function ($any) {
+        return redirect('/');
+    })->where('any', '.*');  // This allows matching all routes
+});
