@@ -40,11 +40,13 @@ class AuthenticatedSessionController extends Controller
             $user = Auth::user();
 
             // Redirect based on user_level
-            return match ($user->user_level) {
-                'admin' => redirect()->route('admin.dashboard'),
-                'employee' => redirect()->route('employee.dashboard'),
-                default => redirect()->route('login'),
-            };
+            // return match ($user->user_level) {
+            //     'admin' => redirect()->route('admin.dashboard'),
+            //     'employee' => redirect()->route('employee.dashboard'),
+            //     default => redirect()->route('login'),
+            // }; DOGSHIT
+
+            return redirect()->intended(route('admin.dashboard', absolute: false));
         }
 
         return back()->withErrors([
