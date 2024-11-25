@@ -63,30 +63,7 @@ const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "compensation", header: "Compensation" },
     { accessorKey: "deduction", header: "Deduction" },
     { accessorKey: "gross_amount", header: "Gross Amount" },
-    {
-        // Action button for table
-        id: "actions",
-        cell: ({ row }) => {
-            const values = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
+   
 ];
 
 export default function AttendanceRecord() {
@@ -114,25 +91,63 @@ export default function AttendanceRecord() {
         >
             <Head title="AttendanceRecord" />
 
-            <BodyContentLayout headerName={"Attendance Record"}>
-                 <div className="flex mb-5 justify-between">
-                    <section className="flex gap-5 w-full">
-                    <div>
-                            <DatePickerWithRange
-                                className=""
-                                date={date}
-                                setDate={setDate}
-                            ></DatePickerWithRange>
-                    </div>
+            <BodyContentLayout headerName={"Employee Attendance Record"}>
+            <div className="flex items-center justify-center h-full">
+                <BodyContentLayout headerName="Employee Informations" className="mt-5  h-fit shadow-md lg:w-2/4">
+                
+                </BodyContentLayout>
+            </div>
+
+                
+            <div className="flex mb-5 justify-between">
+                    <section className="flex gap-7 mt-5 w-full justify-right">
+                    <section className="flex gap-7 w-1/4 justify-left">
+
+                        <Input
+                            type="text"
+                            placeholder="Search..."
+                            className=" rounded-[10px]"
+                        />
+                        </section>
+                        <div>
+                            <Select>
+                                <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Show Entries" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="all">All</SelectItem>
+                                    <SelectItem value="flexi">Dark</SelectItem>
+                                    <SelectItem value="regular">
+                                        Regular
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <Dialog>
+                            <DialogTrigger>
+                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-5">
+                                    <File size={15} />
+                                    Generate Report
+                                </section>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        Feature Under Development
+                                    </DialogTitle>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
                     </section>
-                    </div>
-                <div>
+            </div>
+                 <div>
                     <DataTable
                         columns={columns}
                         table={table}
                         rowStyle="odd:bg-white even:bg-transparent text-center"
-                    ></DataTable>
-                </div>
+                ></DataTable>
+            </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>
     );
