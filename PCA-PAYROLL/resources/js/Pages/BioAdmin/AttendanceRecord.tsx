@@ -115,55 +115,17 @@ export default function AttendanceRecord() {
             <Head title="AttendanceRecord" />
 
             <BodyContentLayout headerName={"Attendance Record"}>
-                <div className="flex  mb-5 justify-between">
+                 <div className="flex  mb-5 justify-between">
                     <section className="flex gap-5 w-full">
-                        <div>
-                            <Select>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="All" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">All</SelectItem>
-                                    <SelectItem value="flexi">Dark</SelectItem>
-                                    <SelectItem value="regular">
-                                        Regular
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <Input
-                            type="text"
-                            placeholder="Search..."
-                            className="w-1/4 rounded-[10px]"
-                        />
-                    </section>
-                    
-                    <section className="flex gap-5 w-full justify-end">
-                        <div>
+                    <div>
                             <DatePickerWithRange
                                 className=""
                                 date={date}
                                 setDate={setDate}
                             ></DatePickerWithRange>
-                        </div>
-                        <Dialog>
-                            <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
-                                    <File size={15} />
-                                    Generate Report
-                                </section>
-                            </DialogTrigger>
-                            <DialogContent>
-                                <DialogHeader>
-                                    <DialogTitle>
-                                        Feature Under Development
-                                    </DialogTitle>
-                                </DialogHeader>
-                            </DialogContent>
-                        </Dialog>
-                            
+                    </div>
                     </section>
-                </div>
+                    </div>
                 <div>
                     <DataTable
                         columns={columns}

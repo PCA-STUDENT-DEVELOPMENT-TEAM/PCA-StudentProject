@@ -54,39 +54,15 @@ type columnTypes = {
 
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "name", header: "Name" },
-    { accessorKey: "rate", header: "Rate" },
-    { accessorKey: "quantity", header: "Quantity" },
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "position", header: "Position" },
-    { accessorKey: "tardiness", header: "Tardiness" },
-    { accessorKey: "compensation", header: "Compensation" },
-    { accessorKey: "deduction", header: "Deduction" },
-    { accessorKey: "gross_amount", header: "Gross Amount" },
-    {
-        // Action button for table
-        id: "actions",
-        cell: ({ row }) => {
-            const values = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
+    { accessorKey: "no.", header: "No." },
+    { accessorKey: "rate", header: "Name" },
+    { accessorKey: "quantity", header: "Employee ID" },
+    { accessorKey: "type", header: "Job Title" },
+    { accessorKey: "position", header: "Date" },
+    { accessorKey: "tardiness", header: "Day" },
+    { accessorKey: "compensation", header: "Time-In" },
+    { accessorKey: "deduction", header: "Time-Out" },
+    
 ];
 
 export default function AttendanceRecord() {
@@ -115,12 +91,43 @@ export default function AttendanceRecord() {
             <Head title="Employee Attendance List" />
 
             <BodyContentLayout headerName={"Employee Attendance List"}>
+
+                
                 <div className="flex  mb-5 justify-between">
                     <section className="flex gap-5 w-full">
-                        <div>
-                            <Select>
+                    <div>
+                            <DatePickerWithRange
+                                className=""
+                                date={date}
+                                setDate={setDate}
+                            ></DatePickerWithRange>
+                    </div>
+                    
+                    <Dialog>
+                            <DialogTrigger>
+                                <section className="flex gap-1 bg-secondaryGreen text-white items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
+                                    View List
+                                </section>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>
+                                        Feature Under Development
+                                    </DialogTitle>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
+                    </section>
+                    
+                    
+                </div>
+                
+                <div className="flex mb-5 justify-between">
+                    <section className="flex gap-7 w-full justify-left">
+                    <div>
+                        <Select>
                                 <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="All" />
+                                    <SelectValue placeholder="Show Entries" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="all">All</SelectItem>
@@ -131,18 +138,7 @@ export default function AttendanceRecord() {
                                 </SelectContent>
                             </Select>
                         </div>
-                    </section>
-                    
-                </div>
-                <div className="flex  mb-5 justify-between">
-                    <section className="flex gap-5 w-full justify-left">
-                        <div>
-                            <DatePickerWithRange
-                                className=""
-                                date={date}
-                                setDate={setDate}
-                            ></DatePickerWithRange>
-                        </div>
+
                         <Dialog>
                             <DialogTrigger>
                                 <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
@@ -158,17 +154,14 @@ export default function AttendanceRecord() {
                                 </DialogHeader>
                             </DialogContent>
                         </Dialog>
-                        <section className="flex gap-5 w-full justify-end">
+                    </section>
+                    <section className="flex gap-7 w-full justify-end">
                         <Input
                             type="text"
                             placeholder="Search..."
-                            className="w-1/4 rounded-[10px]"
+                            className="w-1/2 rounded-[10px]"
                         />
                         </section>
-
-                            
-                    </section>
-
             
                 </div>
                 <div>
