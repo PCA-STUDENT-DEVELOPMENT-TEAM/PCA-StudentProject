@@ -128,7 +128,7 @@ const rlcolumns: ColumnDef<recentRequest>[] = [
     },
 ];
 
-export default function Dashboard() {
+export default function Dashboardb() {
     // Naga infinite re render ang mga useTable. Akong na figure out kay kung ang emply iyang array mag sege siyag re render . Need Backend route for testing
     const recentPayrollData = payrollData;
     const recentLoansData = loanData;

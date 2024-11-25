@@ -65,7 +65,7 @@ const columns: ColumnDef<columnTypes>[] = [
     
 ];
 
-export default function AttendanceRecord() {
+export default function AttendanceList() {
     const data: columnTypes[] = Data;
 
     const table = useReactTable({

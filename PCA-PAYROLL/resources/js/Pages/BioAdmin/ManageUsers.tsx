@@ -38,7 +38,7 @@ const columns: ColumnDef<columnTypes>[] = [
   
 ];
 
-export default function Manageusers() {
+export default function ManageUsers() {
   const data: columnTypes[] = Data;
 
   const table = useReactTable({
