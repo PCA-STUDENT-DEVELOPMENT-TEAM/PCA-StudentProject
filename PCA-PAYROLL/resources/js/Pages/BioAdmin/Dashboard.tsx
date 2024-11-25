@@ -154,8 +154,6 @@ export default function Dashboardb() {
 
             <div className="lg:bg-white lg:shadow-md w-full h-full rounded-[10px] overflow-x-auto lg:block lg:overflow-hidden">
                 <div className="flex gap-5 justify-between py-2 sm:p-5">
-                    {/* Status Card Props need Backend Data Retrieval */}
-                    {/* Need pag adjustments sa design*/}
                     <StatusCardb
                         cardQuantity={102}
                         cardTitle="Total Employees"
@@ -201,7 +199,7 @@ export default function Dashboardb() {
                 <div className="lg:w-full h-full">
                     <div>
                         <BodyContentLayout
-                            headerName="Recent Payrolls"
+                            headerName="Recent Attendance List"
                             className=" mt-5 h-fit shadow-md"
                         >
                             <DataTable

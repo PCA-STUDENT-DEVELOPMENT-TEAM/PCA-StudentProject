@@ -51,6 +51,13 @@ type columnTypes = {
     deduction: number;
     gross_amount: number;
 };
+type heads = {
+    date: number;
+    am: number;
+    pm: number;
+    tardy: number;
+    undertime: number;
+};
 
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
@@ -65,6 +72,7 @@ const columns: ColumnDef<columnTypes>[] = [
     { accessorKey: "gross_amount", header: "Gross Amount" },
    
 ];
+
 
 export default function AttendanceRecord() {
     const data: columnTypes[] = Data;
@@ -105,7 +113,7 @@ export default function AttendanceRecord() {
 
                         <Input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search Employee..."
                             className=" rounded-[10px]"
                         />
                         </section>
@@ -141,6 +149,7 @@ export default function AttendanceRecord() {
                         </Dialog>
                     </section>
             </div>
+
                  <div>
                     <DataTable
                         columns={columns}
