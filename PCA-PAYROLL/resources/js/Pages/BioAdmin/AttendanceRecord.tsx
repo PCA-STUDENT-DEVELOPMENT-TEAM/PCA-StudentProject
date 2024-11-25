@@ -115,7 +115,7 @@ export default function AttendanceRecord() {
             <Head title="AttendanceRecord" />
 
             <BodyContentLayout headerName={"Attendance Record"}>
-                 <div className="flex  mb-5 justify-between">
+                 <div className="flex mb-5 justify-between">
                     <section className="flex gap-5 w-full">
                     <div>
                             <DatePickerWithRange

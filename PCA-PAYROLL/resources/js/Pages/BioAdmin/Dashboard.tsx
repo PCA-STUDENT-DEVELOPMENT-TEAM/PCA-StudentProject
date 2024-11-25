@@ -1,12 +1,17 @@
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import { Head, usePage } from "@inertiajs/react";
-import StatusCard from "@/Components/StatusCard";
+import StatusCardb from "@/Components/StatusCardb";
 import {
+    Users,
     Banknote,
     CreditCard,
     MoreHorizontal,
     PhilippinePeso,
     TrendingDown,
+    Loader,
+    User,
+    Clock,
+    ClockAlert,
 } from "lucide-react";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
 import {
@@ -29,7 +34,6 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-
 type recentPayrolls = {
     period: string;
     name: string;
@@ -72,29 +76,7 @@ const rpcolumns: ColumnDef<recentPayrolls>[] = [
         accessorKey: "compensation",
         header: "Compensation",
     },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const action = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Delete
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
+
 ];
 
 const rlcolumns: ColumnDef<recentRequest>[] = [
@@ -170,75 +152,53 @@ export default function Dashboardb() {
         >
             <Head title="Dashboard" />
 
-            <DatePickerWithRange
-                className="mb-5"
-                date={date}
-                setDate={setDate}
-            ></DatePickerWithRange>
             <div className="lg:bg-white lg:shadow-md w-full h-full rounded-[10px] overflow-x-auto lg:block lg:overflow-hidden">
                 <div className="flex gap-5 justify-between py-2 sm:p-5">
                     {/* Status Card Props need Backend Data Retrieval */}
-                    {/* Need pag adjustments sa design sa Mobile view */}
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Payroll Cost"
-                        Icon={PhilippinePeso}
+                    {/* Need pag adjustments sa design*/}
+                    <StatusCardb
+                        cardQuantity={102}
+                        cardTitle="Total Employees"
+                        Icon={Users}
                     />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Statury Pay"
-                        Icon={Banknote}
+                    <StatusCardb
+                        cardQuantity={0}
+                        cardTitle="Total Absent"
+                        Icon={Users}
                     />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Deductions"
-                        Icon={TrendingDown}
+                    <StatusCardb
+                        cardQuantity={0}
+                        cardTitle="On time Today"
+                        Icon={Clock}
                     />
-                    <StatusCard
-                        cardPercent={95.6}
-                        cardPeriodFrom={
-                            date?.from
-                                ? format(date.from, "LLL dd, y")
-                                : "Month"
-                        }
-                        cardPeriodTo={
-                            date?.to ? format(date.to, "LLL dd, y") : "Month"
-                        }
-                        cardQuantity={99999}
-                        cardTitle="Net Salary"
-                        Icon={CreditCard}
-                    />
+                   
                 </div>
+                <div className="flex gap-5 justify-between py-2 sm:p-5">
+                    {/* Status Card Props need Backend Data Retrieval */}
+                    {/* Need pag adjustments sa design*/}
+                    <StatusCardb
+                        cardQuantity={0}
+                        cardTitle="Total Late"
+                        Icon={ClockAlert}
+                    />
+                    <StatusCardb
+                        cardQuantity={0}
+                        cardTitle="Total On Leave"
+                        Icon={User}
+                    />
+                    <StatusCardb
+                        cardQuantity={0}
+                        cardTitle="Pending Application"
+                        Icon={Loader}
+                    />
+                   
+                </div>
+               
             </div>
+
+
             <div className="lg:flex gap-5">
-                <div className="lg:w-3/4 h-full">
+                <div className="lg:w-full h-full">
                     <div>
                         <BodyContentLayout
                             headerName="Recent Payrolls"
@@ -248,21 +208,6 @@ export default function Dashboardb() {
                                 columns={rpcolumns}
                                 rowStyle="odd:bg-white even:bg-transparent text-center"
                                 table={rpTable}
-                                className="lg:h-[450px]"
-                            />
-                        </BodyContentLayout>
-                    </div>
-                </div>
-                <div className="lg:w-1/4 h-full">
-                    <div>
-                        <BodyContentLayout
-                            headerName="Recent Loan Requests"
-                            className="mt-5 h-fit shadow-md"
-                        >
-                            <DataTable
-                                columns={rlcolumns}
-                                rowStyle="odd:bg-white even:bg-transparent text-center"
-                                table={rlTable}
                                 className="lg:h-[450px]"
                             />
                         </BodyContentLayout>
