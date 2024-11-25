@@ -141,7 +141,7 @@ export default function AttendanceList() {
 
                         <Dialog>
                             <DialogTrigger>
-                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-3">
+                                <section className="flex gap-1 bg-baseYellow text-black items-center justify-center p-2 rounded-[10px] pl-3 pr-5">
                                     <File size={15} />
                                     Generate Report
                                 </section>
