@@ -51,64 +51,19 @@ type recentRequest = {
 
 // Column definition for Recent Payroll Table
 const rpcolumns: ColumnDef<recentPayrolls>[] = [
-    {
-        accessorKey: "period",
-        header: "Period",
-    },
-    {
-        accessorKey: "name",
-        header: "Name",
-    },
-    {
-        accessorKey: "employee_id",
-        header: "Employee Id",
-    },
-    {
-        accessorKey: "position",
-        header: "Position",
-    },
-
-    {
-        accessorKey: "deduction",
-        header: "Deduction",
-    },
-    {
-        accessorKey: "compensation",
-        header: "Compensation",
-    },
-
-];
-
-const rlcolumns: ColumnDef<recentRequest>[] = [
-    { accessorKey: "id", header: "No." },
+    { accessorKey: "gross_amount", header: "No." },
     { accessorKey: "name", header: "Name" },
-    { accessorKey: "loan_details", header: "Loan Details" },
-    {
-        id: "actions",
-        cell: ({ row }) => {
-            const action = row.original;
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <section>
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </section>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View Details</DropdownMenuItem>
-                        <DropdownMenuItem className="text-green-600">
-                            Approve
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                            Deny
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            );
-        },
-    },
+    { accessorKey: "rate", header: "AM Arrival" },
+    { accessorKey: "quantity", header: "AM Departure" },
+    { accessorKey: "type", header: "PM Arrival" },
+    { accessorKey: "position", header: "PM Departure" },
+    { accessorKey: "tardiness", header: "Tardiness" },
+    { accessorKey: "compensation", header: "Undertime" },
+    { accessorKey: "deduction", header: "Date" },
+
 ];
+
+
 
 export default function Dashboardb() {
     // Naga infinite re render ang mga useTable. Akong na figure out kay kung ang emply iyang array mag sege siyag re render . Need Backend route for testing
@@ -130,18 +85,6 @@ export default function Dashboardb() {
         getCoreRowModel: getCoreRowModel(),
     });
 
-    const rlTable = useReactTable({
-        data: rlData,
-        columns: rlcolumns,
-        getPaginationRowModel: getPaginationRowModel(),
-        // Adjust Limit content after database has beeen set
-        initialState: {
-            pagination: {
-                pageSize: 7,
-            },
-        },
-        getCoreRowModel: getCoreRowModel(),
-    });
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
         to: addDays(new Date(), 20),

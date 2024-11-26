@@ -61,15 +61,15 @@ type heads = {
 
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
+    { accessorKey: "gross_amount", header: "No." },
     { accessorKey: "name", header: "Name" },
-    { accessorKey: "rate", header: "Rate" },
-    { accessorKey: "quantity", header: "Quantity" },
-    { accessorKey: "type", header: "Type" },
-    { accessorKey: "position", header: "Position" },
+    { accessorKey: "rate", header: "AM Arrival" },
+    { accessorKey: "quantity", header: "AM Departure" },
+    { accessorKey: "type", header: "PM Arrival" },
+    { accessorKey: "position", header: "PM Departure" },
     { accessorKey: "tardiness", header: "Tardiness" },
-    { accessorKey: "compensation", header: "Compensation" },
-    { accessorKey: "deduction", header: "Deduction" },
-    { accessorKey: "gross_amount", header: "Gross Amount" },
+    { accessorKey: "compensation", header: "Undertime" },
+    { accessorKey: "deduction", header: "Date" },
    
 ];
 
