@@ -74,7 +74,6 @@ class AdminPageController extends Controller
 
 
 
-
     public function ssl(): Response
     {
         // Fetch data from the database
