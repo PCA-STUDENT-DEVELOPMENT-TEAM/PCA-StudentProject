@@ -36,6 +36,7 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(route('bioadmin.dashboard'));
     }
 
+    
     /**
      * Destroy an authenticated session.
      */
