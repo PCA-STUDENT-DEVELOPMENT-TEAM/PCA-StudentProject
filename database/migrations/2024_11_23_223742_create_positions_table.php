@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->id('position_code');
 
-			/* The positions come in the syntax:
+            /* The positions come in the syntax:
 				[Name of Position] [Roman Numeral]
 				This might need to be utilized;
 				or this could be set by the user. */
 
-			$table->string('position_title')->unique();
+            $table->string('position_title')->unique();
 
-			$table->foreignId('salary_grade_code')->constrained('salary_grades')->references('salary_grade_code');
+            $table->foreignId('salary_grade_code')->constrained('salary_grades')->references('salary_grade_code');
 
-            $table->timestamps();
+            $table->timestamps();//
         });
     }
 

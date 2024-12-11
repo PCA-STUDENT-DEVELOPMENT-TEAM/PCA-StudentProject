@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobOrder extends Model
 {
+	protected $table = 'job_orders';
+	protected $primaryKey = 'job_order_code';
+
 	protected $fillable = [
-		'job_order_code',
 		'start_date',
 		'end_date',
 		'employee_code'

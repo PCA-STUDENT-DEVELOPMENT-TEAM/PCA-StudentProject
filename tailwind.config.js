@@ -13,6 +13,9 @@ export default {
 
     theme: {
     	extend: {
+			dropShadow: {
+				'customized': '0 0.3px 6px rgba(0, 0, 0, 0.5)', // Custom shadow
+			},
 			borderRadius: {
 				'pca' : '10px'
 			},
@@ -91,7 +94,10 @@ export default {
     				ring: 'hsl(var(--sidebar-ring))'
     			}
     		}
-    	}
+    	},
+		plugins: [
+			require('tailwind-scrollbar'),
+		],
     },
 
     plugins: [forms, require("tailwindcss-animate"),  require('tailwind-scrollbar')({ nocompatible: true })],

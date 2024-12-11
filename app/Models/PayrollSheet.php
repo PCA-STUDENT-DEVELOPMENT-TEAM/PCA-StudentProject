@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class PayrollSheet extends Model
 {
+	protected $table = 'payroll_sheets';
+	protected $primaryKey = 'payroll_sheet_code';
+
 	protected $fillable = [
-		'payroll_sheet_code',
 		'payroll_name',
 		'payroll_type',
 		'start_date',
@@ -18,7 +20,9 @@ class PayrollSheet extends Model
 		'prepared_by',
 		'recommended_by',
 		'certified_by',
-		'approved_by'
+		'approved_by',
+		'fund_cluster',
+		'include_deduction',
 	];
 	public function payrollEntry() {
 		return $this->hasMany(PayrollEntry::class);

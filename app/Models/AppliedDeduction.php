@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliedDeduction extends Model
 {
+	protected $table = 'applied_deductions';
+	protected $primaryKey = 'app_ded_code';
+
     protected $fillable = [
-		'app_ded_code',
 		'amount',
 		'employee_code',
 		'deduction_code'

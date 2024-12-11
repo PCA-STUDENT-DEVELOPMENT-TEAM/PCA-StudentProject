@@ -5,7 +5,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 
 /*
 USAGE : 
@@ -31,11 +31,13 @@ const DropdownDialog = ({
     trigger,
     openDialog,
     setOpenDialog,
+    dialogClassName,
 }: {
     dialogs: any;
     trigger: ReactNode;
     openDialog: string | null;
     setOpenDialog: any;
+    dialogClassName?: string;
 }) => {
     return (
         <>
@@ -55,6 +57,9 @@ const DropdownDialog = ({
             </DropdownMenu>
             {dialogs.map((dialog: any) => (
                 <Dialog
+                    dialogClassName={
+                        dialog.name == "Delete" ? "" : dialogClassName
+                    }
                     key={dialog.tag}
                     title={dialog.dialogtitle}
                     open={openDialog === dialog.tag}

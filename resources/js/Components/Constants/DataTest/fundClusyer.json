@@ -1,0 +1,30 @@
+[
+    {
+        "fundCode" : "01",
+        "description" : "Regular Agency Fund"
+    },
+    {
+        "fundCode" : "02",
+        "description" : "Foreign Assisted Projects Fund"
+    },
+    {
+        "fundCode" : "03",
+        "description" : "Special Accounts- Local Fund"
+    },
+    {
+        "fundCode" : "04",
+        "description" : "Special Accounts- Foreign Fund"
+    },
+    {
+        "fundCode" : "05",
+        "description" : "Internally Generated Funds"
+    },
+    {
+        "fundCode" : "06",
+        "description" : "Business Related Fund"
+    },
+    {
+        "fundCode" : "07",
+        "description" : "Trust Receipts Fund"
+    }
+]

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
+	protected $table = 'contracts';
+	protected $primaryKey = 'contract_code';
+
     protected $fillable = [
-		'contract_code',
 		'start_date',
 		'end_date',
 		'employee_code'

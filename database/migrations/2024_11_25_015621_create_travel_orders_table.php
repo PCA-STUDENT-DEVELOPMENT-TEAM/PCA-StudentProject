@@ -18,7 +18,7 @@ return new class extends Migration
 			$table->date('start_date');
 			$table->date('end_date');
 			$table->string('travel_order_type');
-			$table->string('travel_order_description');
+			$table->string('travel_order_description')->nullable();
 			$table->string('travel_order_status');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');

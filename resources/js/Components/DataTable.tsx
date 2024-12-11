@@ -1,5 +1,5 @@
 import {
-    Table,
+    Table as CnTable,
     TableBody,
     TableCell,
     TableHead,
@@ -7,55 +7,37 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 import { cn } from "@/lib/utils";
+import { sslProfileTypes } from "@/types/payrollPagesTypes";
 
-import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/Components/ui/pagination";
-
-import { ColumnDef, flexRender } from "@tanstack/react-table";
+import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[];
     headerStyle?: string;
     rowStyle?: string;
-    table: any;
+    table: Table<any>;
     className?: string;
 }
 
 export function DataTable<TData, TValue>({
-    columns,
     headerStyle,
     rowStyle,
     table,
     className,
 }: DataTableProps<TData, TValue>) {
     return (
-        // Fix Pagination : Moves with table . Prefereable if stay sa bottom
-        // Style the Table
-        // Pagination kay dapat naay pay lain number ug dapat naas tunga or naka highlight ang current page sa pagination
-        // Disable Previous Button Page or Hide kung wanay prev page
-        // Disable Next Button Page or Hide kung wanay next page
-        // Link On Click for Add Button
-        // Optimize Pagination : Possibly Use Manual Pagination
         <div className="h-full">
             <div
                 className={cn("rounded-[5px] border shadow-md overflow-hidden")}
             >
-                <Table className={cn("bg-baseGrey h-full ", className)}>
-                    <TableHeader className={headerStyle}>
+                <CnTable className={cn("bg-baseGrey h-full ", className)}>
+                    <TableHeader>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header: any) => {
                                     return (
                                         <TableHead
                                             key={header.id}
-                                            className="text-center"
+                                            className={headerStyle}
                                         >
                                             {header.isPlaceholder
                                                 ? null
@@ -93,7 +75,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell
-                                    colSpan={columns.length}
+                                    colSpan={table.getAllColumns().length}
                                     className="h-24 text-center"
                                 >
                                     No results.
@@ -101,7 +83,7 @@ export function DataTable<TData, TValue>({
                             </TableRow>
                         )}
                     </TableBody>
-                </Table>
+                </CnTable>
             </div>
         </div>
     );

@@ -1,80 +1,91 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/Components/ui/dropdown-menu";
+import { useState } from "react";
+import { usePage } from "@inertiajs/react";
+import { Input } from "@/Components/ui/input";
+import { DataTable } from "@/Components/DataTable";
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayoutBioAdmin";
 import BodyContentLayout from "@/Layouts/BodyContentLayout";
-import { Head, usePage } from "@inertiajs/react";
-import {
-  ColumnDef,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { MoreHorizontal, View } from "lucide-react";
-import Data from "@/Components/Constants/data6.json";
-import { DataTable } from "@/Components/DataTable";
-import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button";
+import { Head } from "@inertiajs/react";
+import { ColumnDef, useReactTable, getCoreRowModel, getPaginationRowModel,    getFilteredRowModel } from "@tanstack/react-table";
 
-type columnTypes = {
-  name: string;
-  id: string;
-  monthly_ammount: number;
-  begin_balance: number;
-  previous_paid: number;
-  paid_amount: number;
+type EmployeeType = {
+    appointment_code: number;
+    created_at: string | null;
+    device_bio_id: string;
+    employee_code: number;
+    employee_number: string;
+    first_name: string;
+    last_name: string;
+    middle_name: string | null;
+    name_extension: string | null;
+    position: string | null;
+    position_code: number;
+    salary_step: number;
+    salary_type: string;
+    station_code: number;
 };
 
-const columns: ColumnDef<columnTypes>[] = [
-  { accessorKey: "EmployeeID", header: "EmployeeID" },
-  { accessorKey: "name", header: "Name" },
-  { accessorKey: "email", header: "Email" },
-  { accessorKey: "job_title", header: "Job Title" },
-  { accessorKey: "mobile_num", header: "Mobile Number" },
-  { accessorKey: "status", header: "Status" },
-  
+const columns: ColumnDef<EmployeeType>[] = [
+    { accessorKey: "employee_number", header: "Employee Number" },
+    {
+        accessorKey: "full_name",
+        header: "Name",
+        cell: ({ row }) =>
+            `${row.original.first_name} ${row.original.middle_name ? row.original.middle_name + ' ' : ''}${row.original.last_name}${row.original.name_extension ? ' ' + row.original.name_extension : ''}`
+    },
+    { accessorKey: "position_code", header: "Position Code" },
+    { accessorKey: "salary_type", header: "Salary Type" },
 ];
 
-export default function Loans() {
-  const data: columnTypes[] = Data;
+export default function ManageUsers() {
+    const { employees } = usePage<{ employees: EmployeeType[] }>().props;
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
 
-  const table = useReactTable({
-      data,
-      columns,
-      getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-      initialState: {
-          pagination: {
-              pageSize: 12,
-          },
-      },
-  });
-  return (
-      <AuthenticatedLayoutAdmin
-          header={<h2>{usePage().component.split("/")[1]}</h2>}
-      >
-          <Head title="Manage Users" />
+    
 
-          <BodyContentLayout headerName={"Manage Users"}>
-              <div className="flex  mb-5 gap-3">
-                  <Input
-                      type="text"
-                      placeholder="Search..."
-                      className="w-1/4 rounded-[10px] ml-auto"
-                  />
+    // React Table setup
+    const table = useReactTable({
+        data: employees,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageSize: 12,
+            },
+        },
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: "auto",
+        state: {
+            globalFilter,
+        },
+        onGlobalFilterChange: setGlobalFilter,
+    });
 
-              </div>
-              <div>
-                  <DataTable
-                      columns={columns}
-                      table={table}
-                      rowStyle="odd:bg-white even:bg-transparent text-center"
-                  ></DataTable>
-              </div>
-          </BodyContentLayout>
-      </AuthenticatedLayoutAdmin>
-  );
+    return (
+        <AuthenticatedLayoutAdmin
+            header={<h2>{usePage().component.split("/")[1]}</h2>}
+        >
+            <Head title="Manage Users" />
+
+            <BodyContentLayout headerName={"Manage Users"}>
+                <div className="flex mb-5 gap-3">
+                    <Input
+                        type="text"
+                        placeholder="Search..."
+                        onChange={(e) =>
+                            setGlobalFilter(e.target.value || "")
+                        }
+                        className="w-1/4 rounded-[10px] ml-auto"
+                    />
+                </div>
+                <div>
+                    <DataTable
+                        columns={columns}
+                        table={table}
+                        rowStyle="odd:bg-white even:bg-transparent text-center"
+                    />
+                </div>
+            </BodyContentLayout>
+        </AuthenticatedLayoutAdmin>
+    );
 }

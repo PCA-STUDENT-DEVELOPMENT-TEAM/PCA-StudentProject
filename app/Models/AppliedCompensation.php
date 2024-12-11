@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliedCompensation extends Model
 {
+	protected $table = 'applied_compensations';
+	protected $primaryKey = 'app_comp_code';
+
     protected $fillable = [
-		'app_comp_code',
 		'amount',
 		'employee_code',
 		'compensation_code'

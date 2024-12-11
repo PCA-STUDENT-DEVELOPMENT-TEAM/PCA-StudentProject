@@ -18,7 +18,7 @@ return new class extends Migration
 			$table->date('start_date');
 			$table->date('end_date');
 			$table->string('leave_request_type');
-			$table->string('leave_request_description');
+			$table->string('leave_request_description')->nullable();
 			$table->string('leave_request_status');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
