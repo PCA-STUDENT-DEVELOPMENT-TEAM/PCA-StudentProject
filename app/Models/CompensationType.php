@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompensationType extends Model
 {
+	protected $table = 'compensation_types';
+	protected $primaryKey = 'compensation_code';
+
 	protected $fillable = [
-		'compensation_code',
 		'compensation_name',
 		'shorthand',
 		'amount',
@@ -15,7 +17,8 @@ class CompensationType extends Model
 		'is_fixed'
 	];
 
-	public function appliedCompensation() {
+	public function appliedCompensation()
+	{
 		return $this->hasMany(AppliedCompensation::class);
 	}
 }

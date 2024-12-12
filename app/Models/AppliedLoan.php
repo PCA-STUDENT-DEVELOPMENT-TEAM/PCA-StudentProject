@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppliedLoan extends Model
 {
+	protected $table = 'applied_loans';
+	protected $primaryKey = 'app_loan_code';
+
     protected $fillable = [
-		'app_loan_code',
 		'start_date',
 		'end_date',
 		'monthly_amount',

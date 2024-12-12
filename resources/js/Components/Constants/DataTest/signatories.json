@@ -1,0 +1,51 @@
+[
+    {
+        "SignatoryID": "S1",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    },
+    {
+        "SignatoryID": "S2",
+        "SignatoryAPersonel": 4,
+        "SignatoryBPersonel": 6,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 1
+    },
+    {
+        "SignatoryID": "S3",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    },
+    {
+        "SignatoryID": "S4",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    },
+    {
+        "SignatoryID": "S5",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    },
+    {
+        "SignatoryID": "S6",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    },
+    {
+        "SignatoryID": "S7",
+        "SignatoryAPersonel": 1,
+        "SignatoryBPersonel": 2,
+        "SignatoryCPersonel": 3,
+        "SignatoryDPersonel": 4
+    }
+]

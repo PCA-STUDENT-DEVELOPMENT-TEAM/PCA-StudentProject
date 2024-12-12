@@ -20,6 +20,7 @@ return new class extends Migration
 			$table->double('begin_balance');
 			$table->double('paid_amount');
 			$table->double('balance');
+            $table->double('previous_paid');
 
 			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 			$table->foreignId('loan_code')->constrained('loan_types')->references('loan_code');

@@ -1,5 +1,9 @@
+// TODO: ADD FUNCTIONALITY SA CARDS
+// FIXME: RECENT PAYROLS SHOULD BE PAYROLL SHEETS NOT PAYSLIPS
+// TODO: REMOVE RECENT LOAN REQUEST
+// TODO: FIX LOGIC SA DATE SELECTOR
+
 import AuthenticatedLayoutAdmin from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
 import StatusCard from "@/Components/StatusCard";
 import {
     Banknote,

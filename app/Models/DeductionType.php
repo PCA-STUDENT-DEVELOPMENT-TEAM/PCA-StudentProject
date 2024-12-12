@@ -6,17 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeductionType extends Model
 {
+	protected $table = 'deduction_types';
+	protected $primaryKey = 'deduction_code';
+
 	protected $fillable = [
-		'deduction_code',
 		'deduction_name',
 		'shorthand',
 		'amount',
 		'is_mandatory',
 		'remittance_percent',
-		'ceiling_amount'
+		'ceiling_amount',
+		'compensation_links'
 	];
 
-	public function appliedDeduction() {
+
+	public function appliedDeduction()
+	{
 		return $this->hasMany(AppliedDeduction::class);
 	}
 }

@@ -1,0 +1,32 @@
+[
+    {
+        "firstName": "John",
+        "middlename": "A.",
+        "lastName": "Doe",
+        "position": "Software Engineer"
+    },
+    {
+        "firstName": "Jane",
+        "middlename": "B.",
+        "lastName": "Smith",
+        "position": "Project Manager"
+    },
+    {
+        "firstName": "Alice",
+        "middlename": "C.",
+        "lastName": "Johnson",
+        "position": "Data Analyst"
+    },
+    {
+        "firstName": "Bob",
+        "middlename": "D.",
+        "lastName": "Brown",
+        "position": "UX Designer"
+    },
+    {
+        "firstName": "Emily",
+        "middlename": "E.",
+        "lastName": "Davis",
+        "position": "QA Engineer"
+    }
+]

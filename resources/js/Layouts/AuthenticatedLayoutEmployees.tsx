@@ -11,10 +11,12 @@ import {
 } from "@/Components/ui/sidebar";
 import {
     BookOpen,
+    CalendarClock,
     HandCoins,
     HeartHandshake,
     LayoutDashboard,
     LucideProps,
+    PhilippinePeso,
     Scale,
     ScrollText,
     TrendingDown,
@@ -46,57 +48,57 @@ const links: link[] = [
         title: "PAYROLL SYSTEM",
         items: [
             {
-                label: "Dashboard",
-                url: "admin.dashboard",
-                icon: LayoutDashboard,
+                label: "My DTR",
+                url: "employee.mydtr",
+                icon: CalendarClock,
             },
             {
-                label: "Payrolls",
-                url: "admin.payrolls",
-                icon: BookOpen,
+                label: "My Payslip",
+                url: "employee.mypayslip",
+                icon: PhilippinePeso,
             },
         ],
     },
-    {
-        title: "REQUESTS",
-        items: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
-    },
-    {
-        title: "CONFIGURATIONS",
-        items: [
-            { label: "Employees", url: "admin.employees", icon: Users },
-            {
-                label: "Compensations",
-                url: "admin.compensations",
-                icon: Wallet,
-            },
-            {
-                label: "Deductions",
-                url: "admin.deductions",
-                icon: TrendingDown,
-            },
-            {
-                label: "Government Share",
-                url: "admin.governmentshare",
-                icon: HeartHandshake,
-            },
-            {
-                label: "Appointment",
-                url: "admin.appointments",
-                icon: UserPen,
-            },
-            {
-                label: "SSL",
-                url: "admin.ssl",
-                icon: Scale,
-            },
-            {
-                label: "Format",
-                url: "admin.formats",
-                icon: ScrollText,
-            },
-        ],
-    },
+    // {
+    //     title: "REQUESTS",
+    //     items: [{ label: "Loans", url: "admin.loans", icon: HandCoins }],
+    // },
+    // {
+    //     title: "CONFIGURATIONS",
+    //     items: [
+    //         { label: "Employees", url: "admin.employees", icon: Users },
+    //         {
+    //             label: "Compensations",
+    //             url: "admin.compensations",
+    //             icon: Wallet,
+    //         },
+    //         {
+    //             label: "Deductions",
+    //             url: "admin.deductions",
+    //             icon: TrendingDown,
+    //         },
+    //         {
+    //             label: "Government Share",
+    //             url: "admin.governmentshare",
+    //             icon: HeartHandshake,
+    //         },
+    //         {
+    //             label: "Appointment",
+    //             url: "admin.appointments",
+    //             icon: UserPen,
+    //         },
+    //         {
+    //             label: "SSL",
+    //             url: "admin.ssl",
+    //             icon: Scale,
+    //         },
+    //         {
+    //             label: "Format",
+    //             url: "admin.formats",
+    //             icon: ScrollText,
+    //         },
+    //     ],
+    // },
 ];
 
 export default function AuthenticatedLayoutEmployees({
@@ -111,7 +113,18 @@ export default function AuthenticatedLayoutEmployees({
         <SidebarProvider open={open} onOpenChange={() => setOpen(!open)}>
             <Sidebar variant="sidebar" collapsible="icon">
                 <SidebarHeader className="bg-baseGreen">
-                    <img src="https://placehold.co/600x400" alt="" />
+                        <div className="flex flex-row items-center">
+                            <img
+                                src="/LogoImg.png"
+                                alt="PCA LOGO"
+                                className="max-h-16"
+                            />
+                            <img
+                                src="/Logotxt.png"
+                                alt="PCA LOGO"
+                                className={cn("max-h-20", open ? "" : "hidden")}
+                            />
+                        </div>
                 </SidebarHeader>
                 <SidebarContent className="bg-baseGreen scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden">
                     {links.map((link) => (

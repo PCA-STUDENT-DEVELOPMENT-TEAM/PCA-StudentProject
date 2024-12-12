@@ -15,15 +15,15 @@ return new class extends Migration
         Schema::create('stations', function (Blueprint $table) {
             $table->id('station_code');
 
-			/* The stations themselves may have specific addresses;
+            /* The stations themselves may have specific addresses;
 				but these may be unimportant and/or empty. */
 
-			$table->string('station_name')->unique();
-			$table->string('street_address')->nullable();
-			$table->string('barangay')->nullable();
-			$table->string('city')->nullable();
-			$table->string('province')->nullable();
-			$table->integer('postal_code', false, true)->nullable();
+            $table->string('station_name')->unique();
+            $table->string('street_address')->nullable();
+            $table->string('barangay')->nullable();
+            $table->string('city')->nullable();
+            $table->string('province')->nullable();
+            $table->integer('postal_code', false, true)->nullable();
 
             $table->timestamps();
         });

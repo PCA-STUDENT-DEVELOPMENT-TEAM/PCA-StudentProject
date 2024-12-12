@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+	protected $table = 'employees';
+	protected $primaryKey = 'employee_code';
+
 	protected $fillable = [
-		'employee_code',
 		'employee_number',
 		'first_name',
 		'middle_name',
@@ -20,55 +22,68 @@ class Employee extends Model
 		'station_code'
 	];
 
-	public function position() {
+	public function position()
+	{
 		return $this->belongsTo(Position::class);
 	}
 
-	public function station() {
+	public function station()
+	{
 		return $this->belongsTo(Station::class);
 	}
 
-	public function appointment() {
+	public function appointment()
+	{
 		return $this->belongsTo(Appointment::class);
 	}
 
-	public function dailyTimeRecord() {
-		return $this->hasMany(DailyTimeRecord::class);
+	public function dailyTimeEntry()
+	{
+		return $this->hasMany(DailyTimeEntry::class);
 	}
 
-	public function travelOrder() {
+	public function travelOrder()
+	{
 		return $this->hasMany(TravelOrder::class);
 	}
 
-	public function leaveRequest() {
+	public function leaveRequest()
+	{
 		return $this->hasMany(LeaveRequest::class);
 	}
 
-	public function jobOrder() {
+	public function jobOrder()
+	{
 		return $this->hasOne(JobOrder::class);
 	}
 
-	public function contract() {
+	public function contract()
+	{
 		return $this->hasOne(Contract::class);
 	}
 
-	public function payrollEntry() {
+	public function payrollEntry()
+	{
 		return $this->hasMany(PayrollEntry::class);
 	}
 
-	public function appliedCompensation() {
+	public function appliedCompensation()
+	{
 		return $this->hasMany(AppliedCompensation::class);
 	}
 
-	public function appliedDeduction() {
+	public function appliedDeduction()
+	{
 		return $this->hasMany(AppliedDeduction::class);
 	}
 
-	public function appliedShare() {
+	public function appliedShare()
+	{
 		return $this->hasMany(AppliedShare::class);
 	}
 
-	public function appliedLoan() {
+	public function appliedLoan()
+	{
 		return $this->hasMany(AppliedLoan::class);
 	}
 }

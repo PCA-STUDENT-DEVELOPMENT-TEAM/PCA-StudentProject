@@ -25,11 +25,11 @@ return new class extends Migration
 			$table->string('name_extension')->nullable();
 			$table->string('salary_type');
 			$table->integer('salary_step', false, true);
+			$table->string('device_bio_id')->unique()->nullable();
 
 			$table->foreignId('position_code')->constrained('positions')->references('position_code');
 			$table->foreignId('appointment_code')->constrained('appointments')->references('appointment_code');
 			$table->foreignId('station_code')->constrained('stations')->references('station_code');
-
             $table->timestamps();
         });
     }

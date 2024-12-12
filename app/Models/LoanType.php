@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class LoanType extends Model
 {
+	protected $table = 'loan_types';
+	protected $primaryKey = 'loan_code';
+
 	protected $fillable = [
-		'loan_code',
 		'loan_name'
 	];
 

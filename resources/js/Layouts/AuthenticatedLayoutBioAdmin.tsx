@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useState, useEffect } from "react";
 import {
     Sidenavbar,
     Sidenavbargroup,
@@ -26,6 +26,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { LucideProps } from "lucide-react";
 import { Separator } from "@/Components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
+import NavLink from "@/Components/NavLink";
 
 import {
     DropdownMenu,
@@ -62,32 +63,42 @@ export default function Authenticated({
             items: [
                 {
                     label: "Dashboard",
-                    url: "admin.dashboardb",
+                    url: "bioadmin.dashboard",
                     icon: LayoutDashboard,
                 },
                 {
                     label: "Attendance List",
-                    url: "admin.attendancelist",
+                    url: "bioadmin.attendancelists",
                     icon: Users,
                 },
                 {
                     label: "Attendance Records",
-                    url: "admin.attendancerecords",
+                    url: "bioadmin.attendancerecords",
                     icon: Files,
                 },
                 {
                     label: "Manage Users",
-                    url: "admin.manageusers",
+                    url: "bioadmin.manageusers",
                     icon: Users,
                 },
             ],
         },
-       
+
     ];
 
     // State para sa collapsabe navbar
 
     const [navStatus, setnavStatus] = useState(false);
+    const [email, setEmail] = useState<string>('');
+
+	useEffect( () => {
+		let display_email = localStorage.getItem('email');
+
+		if (display_email)
+		{
+			setEmail(display_email);
+		}
+	});
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -100,8 +111,6 @@ export default function Authenticated({
                                 navStatus ? "w-64 sm:w-16" : "w-16 sm:w-64"
                             )}
                         >
-                            {/* Add Logo Small + Logo Big. E Separate ratong Typography sa logo kay para pure tailwind ra atong responsive as much as possible */}
-                            <img src="#" alt="LOGO" className="p-5" />
 
                             <div className="scrollbar-track-rounded scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-white scrollbar-track-transparent overflow-y overflow-x-hidden pl-5">
                                 {/* Diri mag generate ug mga groups sa navagation bar. Mao ni nga map mag generate sa mga title*/}
@@ -155,7 +164,7 @@ export default function Authenticated({
                         <div className="flex items-center gap-3">
                             {/* TODO : Add a welcome to the user : Dili nata mag search bar kay taga page tag duha duha nag search bar niya no scroll man ato page*/}
                             <h1 className="hidden lg:block">
-                                Welcome User Name
+                                Welcome {email}
                             </h1>
                             <Separator orientation="vertical" />
                             <DropdownMenu>
@@ -173,7 +182,7 @@ export default function Authenticated({
                                         My Account
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem>
+                                    {/* <DropdownMenuItem>
                                         <Link href="#" className="flex">
                                             <User className="w-5 pr-1" />
                                             Profile
@@ -184,10 +193,11 @@ export default function Authenticated({
                                             <Cog className="w-5 pr-1" />
                                             Settings
                                         </Link>
-                                    </DropdownMenuItem>
+                                    </DropdownMenuItem> */}
+
                                     <DropdownMenuItem>
                                         <Link
-                                            href="#"
+                                            href={route("logout")}
                                             className="flex"
                                             method={"post"}
                                         >
@@ -199,8 +209,9 @@ export default function Authenticated({
                             </DropdownMenu>
                         </div>
                     </div>
-                </header>
-            )}
+                </header >
+            )
+            }
             <main
                 className={cn(
                     "transition-all duration-100 px-10 pt-5",
@@ -209,6 +220,6 @@ export default function Authenticated({
             >
                 {children}
             </main>
-        </div>
+        </div >
     );
 }

@@ -25,6 +25,7 @@ export default function ({
     description,
     open,
     openDialog,
+    dialogClassName,
 }: {
     children?: ReactNode;
     title?: string;
@@ -32,11 +33,12 @@ export default function ({
     description?: string;
     open?: boolean;
     openDialog?: any;
+    dialogClassName?: string;
 }) {
     return (
         <Dialog open={open} onOpenChange={openDialog}>
-            <DialogTrigger>{trigger}</DialogTrigger>
-            <DialogContent>
+            <DialogTrigger asChild>{trigger}</DialogTrigger>
+            <DialogContent className={dialogClassName}>
                 <DialogHeader>
                     <DialogTitle>{title}</DialogTitle>
                     <DialogDescription>{description}</DialogDescription>
