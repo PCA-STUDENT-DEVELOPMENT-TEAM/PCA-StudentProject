@@ -32,8 +32,19 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        
+        $host = $request->getHost();
+        $subdomain = explode('.', $host)[0];
 
-        return redirect()->intended(route('bioadmin.dashboard'));
+        if($subdomain === 'payroll'){
+            return redirect()->intended(route('admin.dashboard'));   
+        }
+
+        else if($subdomain === 'bioadmin'){
+            return redirect()->intended(route('bioadmin.dashboard'));
+        }
+
+
     }
 
     /**
@@ -46,7 +57,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
-        return redirect('/');
+        
+        return redirect(route('payroll.login'));
     }
 }

@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Payroll;
 
+use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\PayrollSheet;
 use Inertia\Inertia;
@@ -17,6 +19,16 @@ class PayrollSheetController extends Controller
         $payrollSheets = PayrollSheet::all();
 
         return Inertia::render('Payroll/Admin/PayrollsPage/PayrollsPage', ['data' => $payrollSheets]);
+    }
+
+    public function get_employees()
+    {
+        $employees = Employee::all();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Employees retrieved successfully',
+            'data' => $employees,
+        ]);
     }
 
     /**

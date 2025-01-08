@@ -1,4 +1,4 @@
-import { Combobox } from "@/Components/ComboBox";
+import { EmployeeListComboBox } from "@/Components/ComboBox";
 import { DataTable } from "@/Components/DataTable";
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
@@ -9,116 +9,72 @@ import {
     getCoreRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
 import IncludeExcludeBox from "@/Components/IncludeExcludeBox";
 
-const EmployeesList = () => {
-    const [data, setData] = useState<Array<EmployeesListTypes>>([
-        {
-            first_name: "John",
-            last_name: "Doe",
-            compensations: 5000,
-            deductions: 1000,
-        },
-        {
-            first_name: "Jane",
-            last_name: "Smith",
-            compensations: 6000,
-            deductions: 1200,
-        },
-        {
-            first_name: "Michael",
-            last_name: "Johnson",
-            compensations: 5500,
-            deductions: 1100,
-        },
-        {
-            first_name: "Emily",
-            last_name: "Williams",
-            compensations: 5200,
-            deductions: 1050,
-        },
-        {
-            first_name: "David",
-            last_name: "Brown",
-            compensations: 5800,
-            deductions: 1150,
-        },
-        {
-            first_name: "Sarah",
-            last_name: "Jones",
-            compensations: 5300,
-            deductions: 1080,
-        },
-        {
-            first_name: "Daniel",
-            last_name: "Garcia",
-            compensations: 5700,
-            deductions: 1130,
-        },
-        {
-            first_name: "Olivia",
-            last_name: "Martinez",
-            compensations: 5400,
-            deductions: 1090,
-        },
-        {
-            first_name: "Matthew",
-            last_name: "Rodriguez",
-            compensations: 5600,
-            deductions: 1120,
-        },
-        {
-            first_name: "Sophia",
-            last_name: "Hernandez",
-            compensations: 5500,
-            deductions: 1100,
-        },
-    ]);
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/Components/ui/accordion";
+import axios from "axios";
 
-    const names = [
-        {
-            value: "Emma Johnson",
-            label: "Emma Johnson",
-        },
-        {
-            value: "Liam Smith",
-            label: "Liam Smith",
-        },
-        {
-            value: "Olivia Brown",
-            label: "Olivia Brown",
-        },
-        {
-            value: "Noah Williams",
-            label: "Noah Williams",
-        },
-        {
-            value: "Ava Jones",
-            label: "Ava Jones",
-        },
-        {
-            value: "Elijah Miller",
-            label: "Elijah Miller",
-        },
-        {
-            value: "Sophia Davis",
-            label: "Sophia Davis",
-        },
-        {
-            value: "James Garcia",
-            label: "James Garcia",
-        },
-        {
-            value: "Isabella Martinez",
-            label: "Isabella Martinez",
-        },
-        {
-            value: "Benjamin Hernandez",
-            label: "Benjamin Hernandez",
-        },
-    ];
+interface EmployeesListTypes {
+    appointment_code: number;
+    device_bio_id: string;
+    employee_code: number;
+    employee_number: string;
+    first_name: string;
+    last_name: string;
+    middle_name: string;
+    name_extenstion: string | null;
+    position_code: number;
+    salary_step: number;
+    salary_type: string;
+    station_code: number;
+}
+
+const EmployeesList = () => {
+    const [data, setData] = useState<Array<EmployeesListTypes>>([]);
+
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    route("admin.get_employee_data")
+                );
+                setData(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const [employeeslist, setemployeeslist] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    route("admin.get_employee_data")
+                );
+                setemployeeslist(response.data.data);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const table = useReactTable({
         data,
@@ -126,18 +82,39 @@ const EmployeesList = () => {
         getCoreRowModel: getCoreRowModel(),
     });
 
+    function handleRowSelect(data: any) {
+        var full_name =
+            data.original.first_name + " " + data.original.last_name;
+        setSelectedName(full_name);
+    }
+
+    function handleAddButton() {
+        console.log(value);
+    }
+
     const [baseItems, setBaseItems] = useState<Array<string>>([]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+    const [selectedName, setSelectedName] = useState<String>("");
+    const [value, setValue] = useState("");
+
     return (
         <div className="flex">
-            <section className="w-full grid grid-cols-2 gap-5">
-                <div>
+            <section className="w-full grid grid-cols-2 gap-5 ">
+                <div className="h-full">
                     <section className="flex justify-start my-2 gap-3">
-                        <Combobox dataset={names} />
-                        <Button type="button">Add Employee</Button>
+                        <EmployeeListComboBox
+                            dataset={employeeslist}
+                            value={value}
+                            setValue={setValue}
+                        />
+                        <Button type="button" onClick={handleAddButton}>
+                            Add Employee
+                        </Button>
                     </section>
-                    <ScrollArea className="h-[calc(100%-20%)] border rounded-[10px]">
+                    <ScrollArea className="h-[500px] border rounded-[10px]">
                         <DataTable
+                            className="h-[500px]"
+                            onMouseEnter={handleRowSelect}
                             table={table}
                             rowStyle="bg-white"
                         ></DataTable>
@@ -145,9 +122,11 @@ const EmployeesList = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <Label className="text-xl my-2">Selected: </Label>
+                    <Label className="text-xl my-2">
+                        Selected: {selectedName}
+                    </Label>
 
-                    <section className="border rounded-[10px] w-full h-[calc(100%-20%)] grid grid-rows-2 p-2 gap-5">
+                    <section className=" w-full h-[500px] grid grid-rows-2 p-2 gap-5">
                         <div>
                             <Tabs
                                 defaultValue="compensations"
@@ -214,27 +193,62 @@ const EmployeesList = () => {
 
 export default EmployeesList;
 
-interface EmployeesListTypes {
-    first_name: string;
-    last_name: string;
-    compensations: number;
-    deductions: number;
-}
-
 const columns: ColumnDef<EmployeesListTypes>[] = [
     {
         accessorKey: "name",
         header: "Name",
         cell: ({ row }) => {
-            return cn(row.original.last_name, ",", row.original.first_name);
+            return (
+                <p className="cursor-pointer">
+                    {cn(row.original.last_name, ",", row.original.first_name)}
+                </p>
+            );
         },
     },
     {
         accessorKey: "compensations",
         header: "Compensations",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("compensations"));
+            return (
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1" className="border-0">
+                        <AccordionTrigger className="p-0">
+                            <p>₱ {number.toLocaleString("en-US")} </p>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            <div className="flex flex-col">
+                                <span>Basic Pay : P3,000.00</span>
+                                <span>PERA : P2,000.00</span>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            );
+        },
     },
     {
         accessorKey: "deductions",
         header: "Deductions",
+        cell: ({ row }) => {
+            const number = Number(row.getValue("compensations"));
+            return (
+                <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1" className="border-0">
+                        <AccordionTrigger className="p-0">
+                            <p>₱ {number.toLocaleString("en-US")} </p>
+                        </AccordionTrigger>
+                        <AccordionContent>
+                            {" "}
+                            <div className="flex flex-col">
+                                <span>GSIS_PREMIUM : P3,000.00</span>
+                                <span>PEKE : P2,000.00</span>
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+                // <p>₱ {number.toLocaleString("en-US")} </p>
+            );
+        },
     },
 ];

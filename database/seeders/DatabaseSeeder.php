@@ -6,7 +6,9 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
+use Illuminate\Support\Str;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \DateTime;
@@ -563,5 +565,29 @@ class DatabaseSeeder extends Seeder
             ];
         }
         DB::table('applied_loans')->insert($appliedLoans);
+
+
+        DB::table('users')->insert([
+            [
+                'name' => 'Bio Admin',
+                'email' => 'bioadmin@example.com',
+                'user_level' => 'bioadmin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password123'), // Change to a secure password
+                'remember_token' => Str::random(10), // Use Str::random
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'user_level' => 'admin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('password123'), // Change to a secure password
+                'remember_token' => Str::random(10), // Use Str::random
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

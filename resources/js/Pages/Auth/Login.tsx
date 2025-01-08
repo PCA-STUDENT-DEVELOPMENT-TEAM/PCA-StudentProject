@@ -9,7 +9,7 @@ import { FormEventHandler } from "react";
 
 export default function Login({ status }: { status?: string }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-		name: "",
+        name: "",
         email: "",
         password: "",
     });
@@ -20,12 +20,11 @@ export default function Login({ status }: { status?: string }) {
 
         post(route("login"), {
             onFinish: () => {
-				reset("password"),
-				localStorage.setItem('email', data.email);
-				localStorage.setItem('password', data.password);
-				console.log(data);
-				console.log(localStorage.length);
-			},
+                reset("password"), localStorage.setItem("email", data.email);
+                localStorage.setItem("password", data.password);
+                console.log(data);
+                console.log(localStorage.length);
+            },
         });
     };
 

@@ -22,6 +22,13 @@ BACK END
 - php artisan key:generate
 - php artisan migrate
 
+
+
+FOR EXCEL IMPORT/EXPORT
+NOTE: uncomment out extension=gd in your php.ini file for this to work
+- composer require maatwebsite/excel --with-all-dependencies
+  
+
 NOTE:
 
 FOR Members that were added before 23/10/2024 . Run git remote set-url origin https://github.com/jlibdev/PCA-StudentProject.git before starting.

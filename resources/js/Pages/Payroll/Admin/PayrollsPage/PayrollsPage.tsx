@@ -21,6 +21,7 @@ import { useState } from "react";
 import { Button } from "@/Components/ui/button";
 import { Label } from "@/Components/ui/label";
 import { PayrollsIndexStore } from "./PayrollIndexCrud";
+import { usePage } from "@inertiajs/react";
 
 const PayrollsPage = () => {
     const [data, setData] = useState<Array<payrollIndexTypes>>([
@@ -91,6 +92,7 @@ const PayrollsPage = () => {
         },
     ]);
 
+    console.log(usePage().props);
     const [globalFilter, setGlobalFilter] = useState<string>("");
     const table = useReactTable({
         data,

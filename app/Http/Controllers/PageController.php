@@ -7,9 +7,19 @@ use Inertia\Inertia;
 
 class PageController extends Controller
 {
-     // Render the homepage
-     public function testingPage()
-     {
-         return Inertia::render('testPage'); // 'Home' corresponds to the 'Home.vue' or 'Home.tsx' in your resources/js/Pages folder
-     }
+    // Render the homepage
+    public function testingPage()
+    {
+        return Inertia::render('testPage');
+    }
+
+    public function mydtr()
+    {
+        return Inertia::render('Payroll/Employee/MyDTR');
+    }
+
+    public function mypayslip()
+    {
+        return Inertia::render(component: 'Payroll/Employee/MyPayslip');
+    }
 }

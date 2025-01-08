@@ -4,6 +4,7 @@ use App\Http\Controllers\Biometric\DashboardController;
 use App\Http\Controllers\Biometric\AttendanceListController;
 use App\Http\Controllers\Biometric\AttendanceRecordController;
 use App\Http\Controllers\Biometric\ManageUserController;
+use App\Http\Controllers\Payroll\PayrollSheetController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -21,6 +22,8 @@ use App\Http\Controllers\Payroll\SummaryController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
+use Inertia\Inertia;
+
 // ->middleware(['auth'])
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
@@ -38,12 +41,18 @@ Route::domain('bioadmin.' . env('APP_URL'))->group(
 );
 
 // ->middleware(['auth'])
-
 // SUBDOMAIN FOR PAYROLL
 Route::domain('payroll.' . env('APP_URL'))->group(function () {
-    Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
 
-    Route::prefix('admin')->group(function () {
+    Route::get('test', [AdminPageController::class, 'format'])->name('admin.formats');
+    Route::get('/', function () {
+        return Inertia::render("Payroll/LoginPage");
+    });
+    Route::get('login', function () {
+        return Inertia::render("Payroll/LoginPage");
+    })->name('payroll.login');
+
+    Route::prefix('admin')->middleware(['usercheck:admin','auth'])->group(function () {
         Route::get('dashboard', [AdminPageController::class, 'index'])->name('admin.dashboard');
         // PAYROLL ROUTES
         Route::get('payroll', [SummaryController::class, 'Summary'])->name('admin.payrolls');
@@ -86,12 +95,20 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::put('ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
         Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
+
+        //export to excel
+        Route::get('/export-salary-grades', [SalaryGradeController::class, 'exportToExcel'])->name('export.salary_grades');
     });
 
+    Route::prefix('employee')->group(function () {
+        Route::get('mydtr', [PageController::class, 'mydtr'])->name('employee.mydtr');
+        Route::get('mypayslip', [PageController::class, 'mypayslip'])->name('employee.mypayslip');
+    });
     Route::fallback(function () {
-        return redirect()->route('admin.formats');
+        return redirect()->route('login');
     });
 });
 

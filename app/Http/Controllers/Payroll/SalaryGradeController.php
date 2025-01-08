@@ -7,6 +7,8 @@ use App\Models\SalaryGrade;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
+use App\Exports\SalaryGradeExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SalaryGradeController extends Controller
 {
@@ -86,5 +88,13 @@ class SalaryGradeController extends Controller
 
         /* Returning a success message to the user. */
         return redirect()->back()->with('success', 'Success');
+    }
+
+    /**
+     * Export Salary Grades to Excel.
+     */
+    public function exportToExcel()
+    {
+        return Excel::download(new SalaryGradeExport, 'salary_grades.xlsx');
     }
 }

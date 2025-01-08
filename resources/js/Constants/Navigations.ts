@@ -51,11 +51,6 @@ export const PAYROLLADMIN: Array<NavigationLinks> = [
                 url: "admin.ssl",
                 icon: Scale,
             },
-            {
-                label: "Format",
-                url: "admin.formats",
-                icon: ScrollText,
-            },
         ],
     },
 ]

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Payroll;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Inertia\Inertia;
 
 
@@ -28,6 +29,7 @@ class LoanController extends Controller
         //         // 'al.end_date'
         //     )
         //     ->get();
+
 
         // Return the data to an Inertia view
         return Inertia::render('Payroll/Admin/LoansPage/LoansPage');

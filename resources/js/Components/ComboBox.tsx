@@ -19,9 +19,16 @@ import {
     PopoverTrigger,
 } from "@/Components/ui/popover";
 
-export function Combobox({ dataset }: { dataset: any }) {
+export function EmployeeListComboBox({
+    dataset,
+    value,
+    setValue,
+}: {
+    dataset: any;
+    value: any;
+    setValue: any;
+}) {
     const [open, setOpen] = React.useState(false);
-    const [value, setValue] = React.useState("");
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -33,8 +40,18 @@ export function Combobox({ dataset }: { dataset: any }) {
                     className="w-[300px] justify-between"
                 >
                     {value
-                        ? dataset.find((data: any) => data.value === value)
-                              ?.label
+                        ? cn(
+                              dataset.find(
+                                  (data: any) =>
+                                      cn(data.first_name, data.last_name) ===
+                                      value
+                              )?.first_name,
+                              dataset.find(
+                                  (data: any) =>
+                                      cn(data.first_name, data.last_name) ===
+                                      value
+                              )?.last_name
+                          )
                         : "Select..."}
                     <ChevronsUpDown className="opacity-50" />
                 </Button>
@@ -50,8 +67,8 @@ export function Combobox({ dataset }: { dataset: any }) {
                         <CommandGroup>
                             {dataset.map((data: any) => (
                                 <CommandItem
-                                    key={data.value}
-                                    value={data.value}
+                                    key={data.employee_code}
+                                    value={data.employee_code}
                                     onSelect={(currentValue) => {
                                         setValue(
                                             currentValue === value
@@ -61,11 +78,15 @@ export function Combobox({ dataset }: { dataset: any }) {
                                         setOpen(false);
                                     }}
                                 >
-                                    {data.label}
+                                    {cn(data.first_name, data.last_name)}
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            value === data.value
+                                            value ===
+                                                cn(
+                                                    data.first_name,
+                                                    data.last_name
+                                                )
                                                 ? "opacity-100"
                                                 : "opacity-0"
                                         )}

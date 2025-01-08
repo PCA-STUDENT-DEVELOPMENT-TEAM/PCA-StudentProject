@@ -13,30 +13,30 @@ export default {
 
     theme: {
     	extend: {
-			dropShadow: {
-				'customized': '0 0.3px 6px rgba(0, 0, 0, 0.5)', // Custom shadow
-			},
-			borderRadius: {
-				'pca' : '10px'
-			},
-    		width: {
-    			'popover-trigger': 'var(--radix-popover-trigger-width)',
-				'sidebar-open' : 'calc(100vw - 16rem)',
-				'sidebar-close' : 'calc(100vw - 3rem)',
-    		},
-			height: {
-				'header' : 'calc(100vh - 3.5rem)',
-			},
-    		maxHeight: {
-    			'popover-content': 'var(--radix-popover-content-available-height)'
-    		},
-    		fontFamily: {
-    			sans: ['Figtree', ...defaultTheme.fontFamily.sans]
+    		dropShadow: {
+    			customized: '0 0.3px 6px rgba(0, 0, 0, 0.5)'
     		},
     		borderRadius: {
     			lg: 'var(--radius)',
     			md: 'calc(var(--radius) - 2px)',
     			sm: 'calc(var(--radius) - 4px)'
+    		},
+    		width: {
+    			'popover-trigger': 'var(--radix-popover-trigger-width)',
+    			'sidebar-open': 'calc(100vw - 16rem)',
+    			'sidebar-close': 'calc(100vw - 3rem)'
+    		},
+    		height: {
+    			header: 'calc(100vh - 3.5rem)'
+    		},
+    		maxHeight: {
+    			'popover-content': 'var(--radix-popover-content-available-height)'
+    		},
+    		fontFamily: {
+    			sans: [
+    				'Figtree',
+                    ...defaultTheme.fontFamily.sans
+                ]
     		},
     		colors: {
     			baseGreen: '#0E4736',
@@ -93,11 +93,33 @@ export default {
     				border: 'hsl(var(--sidebar-border))',
     				ring: 'hsl(var(--sidebar-ring))'
     			}
+    		},
+    		keyframes: {
+    			'accordion-down': {
+    				from: {
+    					height: '0'
+    				},
+    				to: {
+    					height: 'var(--radix-accordion-content-height)'
+    				}
+    			},
+    			'accordion-up': {
+    				from: {
+    					height: 'var(--radix-accordion-content-height)'
+    				},
+    				to: {
+    					height: '0'
+    				}
+    			}
+    		},
+    		animation: {
+    			'accordion-down': 'accordion-down 0.2s ease-out',
+    			'accordion-up': 'accordion-up 0.2s ease-out'
     		}
     	},
-		plugins: [
-			require('tailwind-scrollbar'),
-		],
+    	plugins: [
+    		require('tailwind-scrollbar')
+    	]
     },
 
     plugins: [forms, require("tailwindcss-animate"),  require('tailwind-scrollbar')({ nocompatible: true })],

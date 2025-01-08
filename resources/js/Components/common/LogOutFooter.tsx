@@ -12,6 +12,8 @@ import {
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { SidebarMenuButton, useSidebar } from "@/Components/ui/sidebar";
+import NavLink from "../NavLink";
+import { Link } from "@inertiajs/react";
 
 export function NavUser({
     user,
@@ -89,12 +91,14 @@ export function NavUser({
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
+                <Link href={route("logout")} method="post">
                 <DropdownMenuItem>
                     <span className="flex items-center gap-1 w-full">
                         <LogOut size={15} />
                         Log out
                     </span>
                 </DropdownMenuItem>
+                </Link>
             </DropdownMenuContent>
         </DropdownMenu>
     );

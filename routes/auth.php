@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -44,8 +43,7 @@ Route::middleware('auth')->group(function () {
         ->name('logout');
 });
 
-Route::middleware(['usercheck:guest'])->group(function () {
-    Route::get('/{any}', function ($any) {
-        return redirect('/');
-    })->where('any', '.*');  // This allows matching all routes
+// Catch-All Route (Only define after all specific routes)
+Route::fallback(function () {
+    return redirect('/');
 });

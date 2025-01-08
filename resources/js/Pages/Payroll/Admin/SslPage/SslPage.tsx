@@ -6,7 +6,7 @@ import {
     dropDownDialogsTypes,
     sslProfileTypes,
 } from "@/types/payrollPagesTypes";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import {
     ColumnDef,
     getCoreRowModel,
@@ -23,6 +23,7 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import PaginationTable from "@/Components/Pagination";
 import { SslDelete, SslStore, SslUpdate } from "./SslCrud";
+import { METHODS } from "http";
 
 const SslPage = () => {
     const data = (usePage().props.data as sslProfileTypes[]) || [];
@@ -58,7 +59,6 @@ const SslPage = () => {
         email: "johnDoe2641@email.com",
         avatar: "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png",
     };
-    
 
     return (
         <AuthenticatedLayout
@@ -108,7 +108,7 @@ const SslPage = () => {
 
                         <DialogMenu
                             trigger={
-                                <Button
+                                <Button 
                                     className="gap-2 rounded-pca"
                                     aria-label="Add SSL"
                                 >
@@ -117,8 +117,12 @@ const SslPage = () => {
                                 </Button>
                             }
                             title="Feature Under Development"
-                        />
-                    </div>
+                        >
+                            <Button type="button">
+                                <Link href={route('export.salary_grades')} method ="get">ihoiuiouoi</Link>
+                            </Button>
+                        </DialogMenu>
+                    </div>  
                 </div>
                 <DataTable
                     {...{
