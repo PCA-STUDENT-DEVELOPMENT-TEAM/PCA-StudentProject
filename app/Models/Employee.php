@@ -22,7 +22,6 @@ class Employee extends Model
 		'salary_step',
 		'scanner_id',
 		'is_active',
-
 	];
 
 	public function position()

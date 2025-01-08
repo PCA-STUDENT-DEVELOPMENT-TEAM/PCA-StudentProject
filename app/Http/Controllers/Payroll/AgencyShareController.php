@@ -39,7 +39,7 @@ class AgencyShareController extends Controller
         $validate = $request->validate([
             'name' => 'required|string|max:255',
             'shorthand' => 'required|string|max:50',
-            'amount' => 'required|numeric',
+            'fixed_amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
@@ -49,9 +49,9 @@ class AgencyShareController extends Controller
 
         // Create new AgencyShare
         AgencyShare::create([
-            'name' => $validate['agency_share_name'],
+            'name' => $validate['name'],
             'shorthand' => $validate['shorthand'],
-            'amount' => $validate['amount'],
+            'fixed_amount' => $validate['fixed_amount'],
             'is_mandatory' => $validate['is_mandatory'],
             'remittance_percent' => $validate['remittance_percent'],
             'ceiling_amount' => $validate['ceiling_amount'],
@@ -67,27 +67,27 @@ class AgencyShareController extends Controller
 
     //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
     // [x]: MANA BAIIII
-    public function update(Request $request, $agency_share_name)
+    public function update(Request $request, $agency_share_code)
     {
-        $links = $request->input('compensation_links')
-            ? implode(", ", $request->input('compensation_links'))
+        $links = $request->input('compensation_link')
+            ? implode(", ", $request->input('compensation_link'))
             : null;
 
         //validate user request
         $validate = $request->validate([
-            'agency_share_name' => 'required|string|max:255',
-            'shorthand' => 'required|string|max:50|unique:agency_shares,shorthand,' . $agency_share_name . ',agency_share_name',
-            'amount' => 'required|numeric',
+            'name' => 'required|string|max:255',
+            'shorthand' => 'required|string|max:50|unique:agency_shares,shorthand,' . $agency_share_code . ',agency_share_code',
+            'fixed_amount' => 'required|numeric',
             'is_mandatory' => 'required|boolean',
             'remittance_percent' => 'required|numeric',
             'ceiling_amount' => 'required|numeric',
-            'compensation_links' => 'array|nullable',
-            'compensation_links.*' => 'string|nullable',
+            'compensation_link' => 'array|nullable',
+            'compensation_link.*' => 'string|nullable',
 
         ]);
 
-        $validate['compensation_links'] = $links;
-        AgencyShare::where('agency_share_name', $agency_share_name)->update($validate);
+        $validate['compensation_link'] = $links;
+        AgencyShare::where('agency_share_code', $agency_share_code)->update($validate);
         return redirect()->back()->with('success', 'successfully stored Government Share!');
     }
 

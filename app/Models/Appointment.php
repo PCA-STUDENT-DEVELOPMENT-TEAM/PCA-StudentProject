@@ -11,10 +11,8 @@ class Appointment extends Model
 
 	protected $fillable = [
 		'type',
-		'appointment_type',
+		'compensation_code',
 		'has_mandatory_deduction',
-		'basic_pay_type',
-		'tax_type'
 	];
 
 	public function employee() {

@@ -25,7 +25,7 @@ class AppointmentController extends Controller
         $compensationTypes = CompensationType::pluck('name');
 
         // Return the data to the frontend
-        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes]);
+        return Inertia::render('Payroll/Admin/AppointmentsPage/AppointmentsPage', ['data' => $data, 'compensationTypes' => $compensationTypes, csrf_token()]);
     }
 
     /**
@@ -37,20 +37,19 @@ class AppointmentController extends Controller
         $validated = $request->validate([
             'type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
-            'basic_pay_type' => 'required|string',
-            // 'tax_type' => 'required|string'
+            'compensation_code' => 'required|integer',
         ]);
 
         // Create a new profile record in the database
         Appointment::create([
             'type' => $validated['type'],
             'has_mandatory_deduction' => $validated['has_mandatory_deduction'],
-            'basic_pay_type' => $validated['basic_pay_type'],
-            // 'tax_type' => $validated['tax_type'],
+            'compensation_code' => $validated['compensation_code'],
         ]);
 
         // Redirect back or to a specific page after saving
         return redirect()->back()->with('success', 'Data saved successfully!');
+        // return response()->json(["json" => "test"]);
     }
 
     /**
@@ -62,14 +61,13 @@ class AppointmentController extends Controller
     {
         /* Validating the user request. */
         $validated = $request->validate([
-            'appointment_type' => 'required|string|unique:appointments,appointment_type,' . $appointment_code . ',appointment_code',
+            'type' => 'required|unique:appointments',
             'has_mandatory_deduction' => 'required|boolean',
-            'basic_pay_type' => 'required|string',
-            'tax_type' => 'required|string'
+            'compensation_code' => 'required|integer',
         ]);
 
         Appointment::where('appointment_code', $appointment_code)->update($validated);
-        return redirect()->back()->with('success', 'Successfully updated ssl');
+        return redirect()->back()->with('success', 'Successfully updated Appointment');
     }
 
     /**

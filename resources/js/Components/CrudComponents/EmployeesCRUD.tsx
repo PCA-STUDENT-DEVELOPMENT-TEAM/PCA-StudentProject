@@ -9,6 +9,9 @@ import {
     SelectValue,
 } from "../ui/select";
 import ConfirmCancelButton from "../ConfirmCancelButton";
+import { FormEventHandler } from "react";
+import { toast } from "sonner";
+import { CircleAlert, CircleCheck } from "lucide-react";
 
 const officialStation = ["Surigao", "Agusan", "Del", "Sur", "Office"];
 const Appointments = ["Worker", "Tigtrabaho", "Regular"];
@@ -41,24 +44,56 @@ export function EmployeeEdit({
     setOpenDialog: any;
 }) {
     const { data, setData, processing, put, reset, errors } = useForm({
-        employee_code: RowData.employee_code,
-        first_name: RowData.first_name,
-        middle_name: RowData.middle_name,
-        last_name: RowData.last_name,
-        name_extension: RowData.name_extension,
-        station_name: RowData.station_name,
-        appointment_type: RowData.appointment_type,
-        position_title: RowData.position_title,
-        grade: RowData.grade,
-        step: RowData.step,
-        salary: RowData.salary,
+        station_code: 1,
+        appointment_code: 2,
+        position_code: 3,
+        salary_step: 4
     });
 
-    console.log(data.station_name);
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        put(route("update.employee", 7), {
+            onSuccess: () => {
+                toast(
+                    <div className=" text-green-600 flex-col">
+                        <div className="flex items-center">
+                            <CircleCheck className="h-4" />
+                            <span className="text-base">Success!</span>
+                        </div>
+                        <div className="flex">
+                            <span className="pl-6">
+                                Appointment has been succesfully edited.
+                            </span>
+                        </div>
+                    </div>,
+                    { duration: 2000 }
+                );
+                setOpenDialog(false);
+            },
+            onError: () => {
+                toast(
+                    <div className=" text-red-600 flex-col">
+                        <div className="flex items-center">
+                            <CircleAlert className="h-4" />
+                            <span className="text-base">Error</span>
+                        </div>
+                        <div className="flex">
+                            <span className="pl-6">Please try again...</span>
+                        </div>
+                    </div>,
+                    {
+                        duration: 2000,
+                    }
+                );
+                console.log(errors);
+            },
+        });
+    };
 
     return (
         <div>
-            <form action="">
+            <form onSubmit={submit} action="">
                 <div className="flex gap-3">
                     <div className="w-full">
                         <Label>LAST NAME</Label>

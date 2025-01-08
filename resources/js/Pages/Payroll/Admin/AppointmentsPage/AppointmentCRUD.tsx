@@ -25,14 +25,15 @@ export function AppointmentStore({
     compensationTypes: Array<string>;
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        appointment_type: "",
-        has_mandatory_deduction: false,
-        basic_pay_type: "",
+        type: "Nigga",
+        compensation_code: 1,
+        has_mandatory_deduction: true ,
     });
 
     const changeBasicPayType = (value: string) => {
-        data.basic_pay_type = value;
+        data.type = value;
     };
+
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -46,7 +47,7 @@ export function AppointmentStore({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Appointment Type {data.appointment_type} has
+                                Appointment Type {data.type} has
                                 been added!
                             </span>
                         </div>
@@ -54,9 +55,9 @@ export function AppointmentStore({
                     { duration: 2000 }
                 );
                 reset(
-                    "appointment_type",
+                    "type",
                     "has_mandatory_deduction",
-                    "basic_pay_type"
+                    "compensation_code"
                 );
                 openDialog(false);
             },
@@ -162,17 +163,16 @@ export function AppointmentUpdate({
     compensationTypes: Array<string>;
 }) {
     const { data, put, processing, errors } = useForm({
-        appointment_type: RowData.appointment_type,
-        has_mandatory_deduction: RowData.has_mandatory_deduction,
-        basic_pay_type: RowData.basic_pay_type,
-        tax_type: RowData.tax_type,
+        type: "POWER",
+        compensation_code: 1,
+        has_mandatory_deduction: false,
     });
 
     const changeTaxType = (value: string) => {
-        data.tax_type = value;
+        data.type = value;
     };
     const changeBasicPayType = (value: string) => {
-        data.basic_pay_type = value;
+        data.type = value;
     };
 
     const submit: FormEventHandler = (e) => {
@@ -221,13 +221,13 @@ export function AppointmentUpdate({
                 <div>
                     <Label
                         htmlFor="basic_pay_type"
-                        className={errors.basic_pay_type && "text-red-600"}
+                        className={errors.type && "text-red-600"}
                     >
                         Basic Pay Type
                     </Label>
                     <Select onValueChange={changeBasicPayType}>
                         <SelectTrigger>
-                            <SelectValue placeholder={data.basic_pay_type} />
+                            <SelectValue placeholder={data.type} />
                         </SelectTrigger>
                         <SelectContent>
                             {compensationTypes.map((type) => (
@@ -236,7 +236,7 @@ export function AppointmentUpdate({
                         </SelectContent>
                     </Select>
                     <InputError
-                        message={errors.basic_pay_type}
+                        message={errors.type}
                         className="mt-2"
                     />
                 </div>
@@ -244,14 +244,14 @@ export function AppointmentUpdate({
                 <div>
                     <Label
                         htmlFor="tax_type"
-                        className={errors.tax_type && "text-red-600"}
+                        className={errors.type && "text-red-600"}
                     >
                         Tax Type
                     </Label>
 
                     <Select onValueChange={changeTaxType}>
                         <SelectTrigger>
-                            <SelectValue placeholder={data.tax_type} />
+                            <SelectValue placeholder={data.type} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="WITHHOLDING TAX 1">
@@ -265,7 +265,7 @@ export function AppointmentUpdate({
                             </SelectItem>
                         </SelectContent>
                     </Select>
-                    <InputError message={errors.tax_type} className="mt-2" />
+                    <InputError message={errors.type} className="mt-2" />
                 </div>
 
                 <div className="flex items-center gap-3">

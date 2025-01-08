@@ -23,6 +23,11 @@ return new class extends Migration
 			$table->double('tax_rate');
 
             $table->timestamps();
+
+
+            /*
+                The income tax is hardcoded using procedure in postgres.
+            */
         });
     }
 

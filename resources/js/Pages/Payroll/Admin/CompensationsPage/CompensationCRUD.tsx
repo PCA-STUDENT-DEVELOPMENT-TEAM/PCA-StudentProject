@@ -8,11 +8,11 @@ import CompensationStoreDialog from "./CompensationStoreDialog";
 
 export function CompensationStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        compensation_name: "",
-        shorthand: "",
-        amount: 0,
+        name: "NAME",
+        shorthand: "SHORT",
         is_taxable: false,
         is_fixed: false,
+        fixed_amount: 2000,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -27,7 +27,7 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Compensation Type {data.compensation_name} has
+                                Compensation Type {data.name} has
                                 been added!
                             </span>
                         </div>
@@ -35,9 +35,9 @@ export function CompensationStore({ openDialog }: { openDialog: any }) {
                     { duration: 2000 }
                 );
                 reset(
-                    "compensation_name",
+                    "name",
                     "shorthand",
-                    "amount",
+                    "fixed_amount",
                     "is_taxable",
                     "is_fixed"
                 );
@@ -85,22 +85,21 @@ export function CompensationUpdate({
     setOpenDialog: any;
 }) {
     const { data, setData, put, processing, errors, reset } = useForm({
-        compensation_name: RowData.compensation_name,
-        shorthand: RowData.shorthand,
-        amount: RowData.amount,
-        is_taxable: RowData.is_taxable,
-        is_fixed: RowData.is_fixed,
-        ceiling_amount: RowData.ceiling_amount,
+        name: "NIGGA",
+        shorthand: "FOK",
+        is_taxable: false,
+        is_fixed: false,
+        fixed_amount: 2000,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
         if (!data.is_fixed) {
-            data.amount = 0;
+            data.fixed_amount = 0;
         }
 
-        put(route("update.compensations", RowData), {
+        put(route("update.compensations", 10), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -110,19 +109,18 @@ export function CompensationUpdate({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Successfully Edited {data.compensation_name}
+                                Successfully Edited {data.name}
                             </span>
                         </div>
                     </div>,
                     { duration: 2000 }
                 );
                 reset(
-                    "compensation_name",
+                    "name",
                     "shorthand",
-                    "amount",
+                    "fixed_amount",
                     "is_taxable",
                     "is_fixed",
-                    "ceiling_amount"
                 );
                 setOpenDialog(false);
             },

@@ -17,10 +17,12 @@ return new class extends Migration
 			/* Appointments refer to the type of employee;
 				i.e. "this person was 'appointed' as this type of employee." */
 
-            $table->foreignId('compensation_code')->constrained('compensation_types')->references('compensation_code');
+            $table->foreignId('compensation_code')->constrained('compensation_types')->references('compensation_code')->onDelete('cascade')->nullable();
 
 			$table->string('type')->unique();
 			$table->boolean('has_mandatory_deduction');
+
+            $table->timestamps();
         });
     }
 

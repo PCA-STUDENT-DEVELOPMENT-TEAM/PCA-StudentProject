@@ -87,6 +87,7 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 
         // EMPLOYEES ROUTES
         Route::get('employees', [EmployeeController::class, 'index'])->name('admin.employee');
+        Route::put('employees/{employee_code}', [EmployeeController::class, 'update'])->name('update.employee');
 
         // SSL ROUTES
         Route::get('ssl', [SalaryGradeController::class, 'index'])->name('admin.ssl');
@@ -94,14 +95,12 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
         Route::put('ssl/{grade}', [SalaryGradeController::class, 'update'])->name('update.ssl');
         Route::delete('ssl/{grade}', [SalaryGradeController::class, 'destroy'])->name('delete.ssl');
 
+        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
         //Query routes
         Route::get('/test', [PageController::class, 'testingPage']);
-        Route::get('employee/{employee_code}', [EmployeeController::class, 'get_employee_data'])->name('admin.employee_data');
-        Route::get('/employeelist', [PayrollSheetController::class, 'get_employees'])->name('admin.get_employee_data');
 
         //export to excel
         Route::get('/export-salary-grades', [SalaryGradeController::class, 'exportToExcel'])->name('export.salary_grades');
-
     });
 
     Route::prefix('employee')->group(function () {
@@ -114,4 +113,4 @@ Route::domain('payroll.' . env('APP_URL'))->group(function () {
 });
 
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';

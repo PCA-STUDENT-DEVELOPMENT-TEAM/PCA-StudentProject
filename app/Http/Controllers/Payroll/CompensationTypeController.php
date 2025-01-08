@@ -28,8 +28,8 @@ class CompensationTypeController extends Controller
     {
         //validate user request
         $validated = $request->validate([
-            'compensation_name' => 'required|string|max:100',
-            'shorthand' => 'required|string|max:100',
+            'name' => 'required|string|unique:compensation_types',
+            'shorthand' => 'required|string|max:100|unique:compensation_types',
             'amount' => 'required|numeric',
             'is_taxable' => 'boolean',
             'is_fixed' => 'boolean',
@@ -37,7 +37,7 @@ class CompensationTypeController extends Controller
 
         //Create a new profile record in the database
         CompensationType::create([
-            'compensation_name' => $validated['compensation_name'],
+            'name' => $validated['name'],
             'shorthand' => $validated['shorthand'],
             'amount' => $validated['amount'],
             'is_taxable' => $validated['is_taxable'],
@@ -55,11 +55,11 @@ class CompensationTypeController extends Controller
     {
 
         $validate = $request->validate([
-            'compensation_name' => 'string|max:255|unique:compensation_types,compensation_name,' . $compensation_code . ',compensation_code',
-            'shorthand' => 'string|max:255|unique:compensation_types,shorthand,' . $compensation_code . ',compensation_code',
-            'amount' => 'numeric',
-            'is_taxable' => 'boolean',
-            'is_fixed' => 'boolean',
+            'name' => 'required|string|max:255|unique:compensation_types,name,' . $compensation_code . ',compensation_code',
+            'shorthand' => 'required|string|max:255|unique:compensation_types,shorthand,' . $compensation_code . ',compensation_code',
+            'fixed_amount' => 'required|numeric',
+            'is_taxable' => 'required|boolean',
+            'is_fixed' => 'required|boolean',
         ]);
 
         CompensationType::where('compensation_code', $compensation_code)->update($validate);

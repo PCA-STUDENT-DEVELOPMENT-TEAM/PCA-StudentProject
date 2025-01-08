@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('signatories', function (Blueprint $table) {
             $table->id('signatory_code');
 
-            $table->foreignId('preparer_code')->constrained('employees')->references('employee_code');  
+            $table->foreignId('preparer_code')->constrained('employees')->references('employee_code');
             $table->foreignId('recommender_code')->constrained('employees')->references('employee_code');
             $table->foreignId('certifier_code')->constrained('employees')->references('employee_code');
             $table->foreignId('approver_code')->constrained('employees')->references('employee_code');

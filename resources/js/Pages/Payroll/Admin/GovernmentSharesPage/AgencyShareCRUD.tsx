@@ -23,13 +23,13 @@ export function AgencyShareStore({
 }) {
     const { data, setData, post, processing, errors, reset, setError } =
         useForm({
-            agency_share_name: "",
-            shorthand: "",
-            amount: 0,
+            name: "power",
+            shorthand: "PWR",
             is_mandatory: false,
-            remittance_percent: 0,
-            ceiling_amount: 0,
-            compensation_links: [] as Array<string>,
+            compensation_links: ["niggalations"] as Array<string>,
+            fixed_amount: 300,
+            remittance_percentage: 0.1,
+            ceiling_amount: 10.11,
         });
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -37,16 +37,11 @@ export function AgencyShareStore({
         data.compensation_links = [...selectedItems];
 
         if (
-            data.amount == 0 &&
-            data.remittance_percent == 0 &&
+            data.remittance_percentage == 0 &&
             data.ceiling_amount == 0
         ) {
             setError(
-                "amount",
-                "Amount and remittance must not be zero at the same time."
-            );
-            setError(
-                "remittance_percent",
+                "remittance_percentage",
                 "Amount and remittance must not be zero at the same time."
             );
             return;
@@ -62,7 +57,7 @@ export function AgencyShareStore({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Agency Share {data.agency_share_name} has been
+                                Agency Share {data.name} has been
                                 Added
                             </span>
                         </div>
@@ -70,11 +65,10 @@ export function AgencyShareStore({
                     { duration: 2000 }
                 );
                 reset(
-                    "agency_share_name",
+                    "name",
                     "shorthand",
-                    "amount",
                     "is_mandatory",
-                    "remittance_percent",
+                    "remittance_percentage",
                     "ceiling_amount",
                     "compensation_links"
                 );
@@ -144,13 +138,13 @@ export function AgencyShareUpdate({
 }) {
     const { data, setData, put, processing, errors, reset, setError } = useForm(
         {
-            agency_share_name: RowData.agency_share_name,
-            shorthand: RowData.shorthand,
-            amount: RowData.amount,
-            is_mandatory: RowData.is_mandatory,
-            ceiling_amount: RowData.ceiling_amount,
-            remittance_percent: RowData.remittance_percent,
-            compensation_links: [] as Array<string>,
+            name: "power",
+            shorthand: "PWR",
+            is_mandatory: false,
+            compensation_links: ["wow"] as Array<string>,
+            fixed_amount: 300,
+            remittance_percentage: 0.1,
+            ceiling_amount: 10.11,
         }
     );
 
@@ -160,30 +154,30 @@ export function AgencyShareUpdate({
         data.compensation_links = [...selectedItems];
 
         if (selected == "Fixed") {
-            data.remittance_percent = 0;
+            data.remittance_percentage = 0;
             data.ceiling_amount = 0;
         }
         if (selected == "Remittance") {
-            data.amount = 0;
+            data.fixed_amount = 0;
         }
 
         if (
-            data.amount == 0 &&
-            data.remittance_percent == 0 &&
+            data.fixed_amount == 0 &&
+            data.remittance_percentage == 0 &&
             data.ceiling_amount == 0
         ) {
             setError(
-                "amount",
+                "fixed_amount",
                 "Amount and remittance must not be zero at the same time."
             );
             setError(
-                "remittance_percent",
+                "remittance_percentage",
                 "Amount and remittance must not be zero at the same time."
             );
             return;
         }
 
-        put(route("update.governmentshare", RowData), {
+        put(route("update.governmentshare", 3), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">

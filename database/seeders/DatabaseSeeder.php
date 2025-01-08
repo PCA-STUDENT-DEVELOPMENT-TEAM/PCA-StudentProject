@@ -170,7 +170,7 @@ class DatabaseSeeder extends Seeder
 
         // Insert into the table
         DB::table('compensation_types')->insert($compensationTypes);
-                
+
         // Appointments ===========================================================================
         $appointments = [];
         $uniqueAppointmentTypes = [
@@ -198,27 +198,6 @@ class DatabaseSeeder extends Seeder
             ];
         }
         DB::table('appointments')->insert($appointments);
-
-        // employees ========================================================================
-        $employees = [];
-        $deviceBioIds = range(1, 100);
-        shuffle($deviceBioIds);
-        for ($i = 1; $i <= 50; $i++) {
-            $employees[] = [
-                'appointment_code' => $faker->numberBetween(1, 10),
-                'income_tax_code' => $faker->numberBetween(1, 10),
-                'employee_number' => $faker->unique()->randomNumber(5),
-                'first_name' => $faker->firstName,
-                'middle_name' => $faker->lastName,
-                'last_name' => $faker->lastName,
-                'name_extension' => $faker->optional(0.1)->suffix,
-                'salary_step' => $faker->numberBetween(1, 8),
-                'scanner_id' => array_pop($deviceBioIds),
-                'is_active' => $faker->boolean
-            ];
-        }
-        // Insert into the employees table
-        DB::table('employees')->insert($employees);
 
         // positions ================================================================
         $positions = [];
@@ -248,16 +227,63 @@ class DatabaseSeeder extends Seeder
 
         for ($i = 1; $i <= 19; $i++) {
             $positions[] = [
-                'employee_code' => random_int(1, 50),
                 'title' => "$jobTitles[$i]",
                 'salary_grade' => $i
             ];
         }
         DB::table('positions')->insert($positions);
 
+        // daily time entries ==================================================================
+        $dailyTimeEntries = [];
+        for ($i = 0; $i < 50; $i++) {
+            $date = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
+            $timeInAm = $faker->time('08:00:00', '10:00:00');
+            $timeOutAm = (new DateTime($timeInAm))->modify('+' . $faker->numberBetween(60, 120) . ' minutes')->format('H:i:s');
+            $timeInPm = $faker->time('13:00:00', '14:00:00');
+            $timeOutPm = (new DateTime($timeInPm))->modify('+' . $faker->numberBetween(60, 240) . ' minutes')->format('H:i:s');
+            $tardyMinutes = $faker->numberBetween(0, 30);
+            $totalMinutesWorked = (strtotime($timeOutAm) - strtotime($timeInAm)) / 60 + (strtotime($timeOutPm) - strtotime($timeInPm)) / 60;
+            $expectedDailyMinutes = 480;
+            $undertimeMinutes = max(0, $expectedDailyMinutes - $totalMinutesWorked - $tardyMinutes);
+
+            $dailyTimeEntries[] = [
+                'am_clockin' => $timeInAm,
+                'am_clockout' => $timeOutAm,
+                'pm_clockin' => $timeInPm,
+                'pm_clockout' => $timeOutPm,
+                'late_minutes' => $tardyMinutes,
+                'under_minutes' => $undertimeMinutes,
+                'work_minutes' => $totalMinutesWorked,
+                'credits' => $faker->numberBetween(0, 10)
+            ];
+        }
+        DB::table('daily_entries')->insert($dailyTimeEntries);
+
+        // employees ========================================================================
+        $employees = [];
+        $deviceBioIds = range(1, 100);
+        shuffle($deviceBioIds);
+        for ($i = 1; $i <= 50; $i++) {
+            $employees[] = [
+                'position_code' => $faker->numberBetween(1, 10),
+                'appointment_code' => $faker->numberBetween(1, 10),
+                'income_tax_code' => $faker->numberBetween(1, 10),
+                'daily_entry_code' => $faker->numberBetween(1, 10),
+                'employee_number' => $faker->unique()->randomNumber(5),
+                'first_name' => $faker->firstName,
+                'middle_name' => $faker->lastName,
+                'last_name' => $faker->lastName,
+                'name_extension' => $faker->optional(0.1)->suffix,
+                'salary_step' => $faker->numberBetween(1, 8),
+                'scanner_id' => array_pop($deviceBioIds),
+                'is_active' => $faker->boolean
+            ];
+        }
+        // Insert into the employees table
+        DB::table('employees')->insert($employees);
 
         //Signatory =========================================================================
-        
+
         $signatoryData=[];
         for($i = 1; $i<= 7;$i++){
             $signatoryData[] = [
@@ -318,33 +344,6 @@ class DatabaseSeeder extends Seeder
         }
         DB::table('travel_orders')->insert($travelOrders);
 
-        // daily time entries ==================================================================
-        $dailyTimeEntries = [];
-        for ($i = 0; $i < 50; $i++) {
-            $date = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
-            $timeInAm = $faker->time('08:00:00', '10:00:00');
-            $timeOutAm = (new DateTime($timeInAm))->modify('+' . $faker->numberBetween(60, 120) . ' minutes')->format('H:i:s');
-            $timeInPm = $faker->time('13:00:00', '14:00:00');
-            $timeOutPm = (new DateTime($timeInPm))->modify('+' . $faker->numberBetween(60, 240) . ' minutes')->format('H:i:s');
-            $tardyMinutes = $faker->numberBetween(0, 30);
-            $totalMinutesWorked = (strtotime($timeOutAm) - strtotime($timeInAm)) / 60 + (strtotime($timeOutPm) - strtotime($timeInPm)) / 60;
-            $expectedDailyMinutes = 480;
-            $undertimeMinutes = max(0, $expectedDailyMinutes - $totalMinutesWorked - $tardyMinutes);
-
-            $dailyTimeEntries[] = [
-                'employee_code' => $faker->numberBetween(1, 50), // Assuming 50 employees
-                'am_clockin' => $timeInAm,
-                'am_clockout' => $timeOutAm,
-                'pm_clockin' => $timeInPm,
-                'pm_clockout' => $timeOutPm,
-                'late_minutes' => $tardyMinutes,
-                'under_minutes' => $undertimeMinutes,
-                'work_minutes' => $totalMinutesWorked,
-                'credits' => $faker->numberBetween(0, 10)
-            ];
-        }
-        DB::table('daily_entries')->insert($dailyTimeEntries);
-
         // Job orders =========================================================================
         $jobOrders = [];
         for ($i = 0; $i < 10; $i++) {
@@ -352,9 +351,9 @@ class DatabaseSeeder extends Seeder
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $endDate = (new DateTime($startDate))->modify('+' . $faker->numberBetween(1, 5) . ' days')->format('Y-m-d');
             $jobOrders[] = [
+                'employee_code' => $employeeCode,
                 'start_date' => $startDate,
-                'end_date' => $endDate,
-                'employee_code' => $employeeCode
+                'end_date' => $endDate
             ];
         }
         DB::table('job_orders')->insert($jobOrders);

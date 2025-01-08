@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('applied_station_code');
 
             $table->foreignId('station_code')->constrained('stations')->references('station_code');
-			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');            
+			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
 
             $table->timestamps();
         });

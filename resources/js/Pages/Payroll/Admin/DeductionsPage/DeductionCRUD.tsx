@@ -22,26 +22,26 @@ export function DeductionStore({
 }) {
     const { data, setData, post, processing, errors, reset, setError } =
         useForm({
-            deduction_name: "",
-            shorthand: "",
-            amount: 0,
+            name: "FUKENS",
+            shorthand: "FKPO",
+            fixed_amount: 2000,
             is_mandatory: false,
-            remittance_percent: 0,
-            ceiling_amount: 0,
-            compensation_links: [] as Array<string>,
+            remittance_percent: 0.10,
+            ceiling_amount: 0.13,
+            compensation_link: ["nigga", "poweorjkn"] as Array<string>,
         });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        data.compensation_links = [...selectedItems];
+        // data.compensation_link = [...selectedItems];
 
         if (
-            data.amount == 0 &&
+            data.fixed_amount == 0 &&
             data.remittance_percent == 0 &&
             data.ceiling_amount == 0
         ) {
             setError(
-                "amount",
+                "fixed_amount",
                 "Amount and remittance must not be zero at the same time."
             );
             setError(
@@ -61,7 +61,7 @@ export function DeductionStore({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Deduction Type {data.deduction_name} has been
+                                Deduction Type {data.name} has been
                                 added!
                             </span>
                         </div>
@@ -69,13 +69,13 @@ export function DeductionStore({
                     { duration: 2000 }
                 );
                 reset(
-                    "deduction_name",
+                    "name",
                     "shorthand",
-                    "amount",
+                    "fixed_amount",
                     "is_mandatory",
                     "remittance_percent",
                     "ceiling_amount",
-                    "compensation_links"
+                    "compensation_link"
                 );
                 openDialog(false);
             },
@@ -149,13 +149,13 @@ export function DeductionUpdate({
     setOpenDialog: any;
 }) {
     const { data, put, setData, processing, errors, setError } = useForm({
-        deduction_name: RowData.deduction_name,
-        shorthand: RowData.shorthand,
-        amount: RowData.amount,
-        is_mandatory: RowData.is_mandatory,
-        remittance_percent: RowData.remittance_percent,
-        ceiling_amount: RowData.ceiling_amount,
-        compensation_links: [] as Array<string>,
+        name: "yes",
+        shorthand: "Nwpeor",
+        fixed_amount: 2000,
+        is_mandatory: false,
+        remittance_percent: 0.10,
+        ceiling_amount: 0.13,
+        compensation_links: ["nigga"] as Array<string>,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -167,16 +167,16 @@ export function DeductionUpdate({
             data.ceiling_amount = 0;
         }
         if (selected == "Remittance") {
-            data.amount = 0;
+            data.fixed_amount = 0;
         }
 
         if (
-            data.amount == 0 &&
+            data.fixed_amount == 0 &&
             data.remittance_percent == 0 &&
             data.ceiling_amount == 0
         ) {
             setError(
-                "amount",
+                "fixed_amount",
                 "Amount and remittance must not be zero at the same time."
             );
             setError(
@@ -186,7 +186,7 @@ export function DeductionUpdate({
             return;
         }
 
-        put(route("update.deduction", RowData), {
+        put(route("update.deduction", 10), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -196,7 +196,7 @@ export function DeductionUpdate({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Deduction type {data.deduction_name} has been
+                                Deduction type {data.name} has been
                                 succesfully edited.
                             </span>
                         </div>
