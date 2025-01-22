@@ -30,7 +30,7 @@ class CompensationTypeController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|unique:compensation_types',
             'shorthand' => 'required|string|max:100|unique:compensation_types',
-            'amount' => 'required|numeric',
+            'fixed_amount' => 'required|numeric',
             'is_taxable' => 'boolean',
             'is_fixed' => 'boolean',
         ]);
@@ -39,21 +39,17 @@ class CompensationTypeController extends Controller
         CompensationType::create([
             'name' => $validated['name'],
             'shorthand' => $validated['shorthand'],
-            'amount' => $validated['amount'],
+            'fixed_amount' => $validated['fixed_amount'],
             'is_taxable' => $validated['is_taxable'],
             'is_fixed' => $validated['is_fixed'],
-
         ]);
 
         //Redirect back or to a specific page after saving
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
-    //  TODO: SA PAG UPDATE SA MGA DAPAT NAKA UNIQUE LIKE SHORTHAND DAPAT MA ADDRESS
-    // [x]: MANA NI BAAAAI
     public function update(Request $request, $compensation_code)
     {
-
         $validate = $request->validate([
             'name' => 'required|string|max:255|unique:compensation_types,name,' . $compensation_code . ',compensation_code',
             'shorthand' => 'required|string|max:255|unique:compensation_types,shorthand,' . $compensation_code . ',compensation_code',
@@ -69,7 +65,6 @@ class CompensationTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // TODO: APILON OG DELETE ANG COMPENSATION_CODE SA TABLE APPLIED_COMPENSATIONS
     public function destroy($compensation_code)
     {
         //Find the record by compensation_code

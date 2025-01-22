@@ -15,13 +15,12 @@ const CompensationStoreDialog = ({
     setData: any;
     errors: Partial<
         Record<
-            | "compensation_name"
+            | "name"
             | "shorthand"
-            | "amount"
+            | "fixed_amount"
             | "is_taxable"
             | "is_fixed"
-            | "compesation_variant"
-            | "ceiling_amount",
+            | "compesation_variant",
             string
         >
     >;
@@ -50,31 +49,31 @@ const CompensationStoreDialog = ({
             <div className="grid grid-cols-2 gap-5">
                 <section>
                     <Label
-                        className={errors.compensation_name && "text-red-600"}
+                        className={errors.name && "text-red-600"}
                     >
                         Name of Compensation
                     </Label>
                     <Input
-                        id="compensation_name"
+                        id="name"
                         type="text"
-                        name="compensation_name"
-                        value={data.compensation_name}
+                        name="name"
+                        value={data.name}
                         onChange={(e) =>
                             setData(
-                                "compensation_name",
+                                "name",
                                 e.target.value.toUpperCase()
                             )
                         }
                     />
                     <InputError
-                        message={errors.compensation_name}
+                        message={errors.name}
                         className="mt-2"
                     />
                 </section>
 
                 <section>
                     <Label
-                        className={errors.compensation_name && "text-red-600"}
+                        className={errors.name && "text-red-600"}
                     >
                         Shorthand
                     </Label>
@@ -88,7 +87,7 @@ const CompensationStoreDialog = ({
                         }
                     />
                     <InputError
-                        message={errors.compensation_name}
+                        message={errors.name}
                         className="mt-2"
                     />
                 </section>
@@ -117,15 +116,15 @@ const CompensationStoreDialog = ({
                         <Label>Amount</Label>
                         <Input
                             disabled={selected !== "Fixed"}
-                            id="amount"
+                            id="fixed_amount"
                             type="number"
-                            name="amount"
+                            name="fixed_amount"
                             step="0.01"
                             min="1"
-                            value={data.amount}
-                            onChange={(e) => setData("amount", e.target.value)}
+                            value={data.fixed_amount}
+                            onChange={(e) => setData("fixed_amount", e.target.value)}
                         />
-                        <InputError message={errors.amount} className="mt-2" />
+                        <InputError message={errors.fixed_amount} className="mt-2" />
                     </section>
                 </div>
             </RadioGroup>

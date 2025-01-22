@@ -13,6 +13,7 @@ import {
 import IncludeExcludeBox from "../../../../Components/IncludeExcludeBox";
 import ToastError from "../../../../Components/ToastError";
 import GovernmentShareStore from "./GovernmentShareStore";
+import { Row } from "react-day-picker";
 
 export function AgencyShareStore({
     openDialog,
@@ -26,10 +27,10 @@ export function AgencyShareStore({
             name: "",
             shorthand: "",
             is_mandatory: false,
-            compensation_link: ["niggalations", "huh"] as Array<string>,
-            fixed_amount: 300,
-            remittance_percent: 0.1,
-            ceiling_amount: 10.11,
+            compensation_link: [] as Array<string>,
+            fixed_amount: 0,
+            remittance_percent: 0,
+            ceiling_amount: 0,
         });
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -136,15 +137,16 @@ export function AgencyShareUpdate({
     setOpenDialog: any;
     compensationTypes: Array<string>;
 }) {
+    console.log(RowData);
     const { data, setData, put, processing, errors, reset, setError } = useForm(
         {
-            name: "power",
-            shorthand: "PWR",
-            is_mandatory: false,
-            compensation_link: ["wow"] as Array<string>,
-            fixed_amount: 300,
-            remittance_percent: 0.1,
-            ceiling_amount: 10.11,
+            name: RowData.name,
+            shorthand: RowData.shorthand,
+            is_mandatory: RowData.is_mandatory,
+            compensation_link: RowData.compensation_links,
+            fixed_amount: RowData.fixed_amount,
+            remittance_percent: RowData.remittance_percent,
+            ceiling_amount: RowData.ceiling_amount,
         }
     );
 
@@ -177,7 +179,7 @@ export function AgencyShareUpdate({
             return;
         }
 
-        put(route("update.governmentshare", 3), {
+        put(route("update.governmentshare", RowData.agency_share_code), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -223,8 +225,8 @@ export function AgencyShareUpdate({
             },
         });
     };
-    if (RowData.compensation_links != null) {
-        data.compensation_link = RowData.compensation_links
+    if (RowData.compensation_link != null) {
+        data.compensation_link = RowData.compensation_link
             .split(",")
             .map((item: string) => item.trim());
     } else data.compensation_link = [];

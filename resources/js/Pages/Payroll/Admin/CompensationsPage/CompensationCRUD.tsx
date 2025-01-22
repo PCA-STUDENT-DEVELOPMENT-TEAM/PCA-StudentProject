@@ -8,11 +8,11 @@ import CompensationStoreDialog from "./CompensationStoreDialog";
 
 export function CompensationStore({ openDialog }: { openDialog: any }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: "NAME",
-        shorthand: "SHORT",
+        name: "",
+        shorthand: "",
         is_taxable: false,
         is_fixed: false,
-        fixed_amount: 2000,
+        fixed_amount: 0,
     });
 
     const submit: FormEventHandler = (e) => {
@@ -85,11 +85,11 @@ export function CompensationUpdate({
     setOpenDialog: any;
 }) {
     const { data, setData, put, processing, errors, reset } = useForm({
-        name: "NIGGA",
-        shorthand: "FOK",
-        is_taxable: false,
-        is_fixed: false,
-        fixed_amount: 2000,
+        name: RowData.name,
+        shorthand: RowData.shorthand,
+        is_taxable: RowData.is_taxable,
+        is_fixed: RowData.is_fixed,
+        fixed_amount: RowData.fixed_amount,
     });
 
     const submit: FormEventHandler = (e) => {

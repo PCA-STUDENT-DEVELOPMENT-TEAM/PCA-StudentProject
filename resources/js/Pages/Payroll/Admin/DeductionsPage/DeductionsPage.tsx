@@ -110,13 +110,13 @@ export default DeductionsPage;
 
 const columns: ColumnDef<deductionTypes>[] = [
     { accessorKey: "deduction_code", header: "ID" },
-    { accessorKey: "deduction_name", header: "DEDUCTION NAME" },
+    { accessorKey: "name", header: "DEDUCTION NAME" },
     { accessorKey: "shorthand", header: "SHORTHAND" },
     {
-        accessorKey: "amount",
+        accessorKey: "fixed_amount",
         header: "AMOUNT",
         cell: ({ row }) => {
-            const number = Number(row.getValue("amount"));
+            const number = Number(row.getValue("fixed_amount"));
             return <p>₱ {number.toLocaleString("en-US")}</p>;
         },
     },
@@ -145,7 +145,7 @@ const columns: ColumnDef<deductionTypes>[] = [
                 {
                     tag: "1",
                     name: "Edit",
-                    dialogtitle: cn("Edit", rowData.deduction_name),
+                    dialogtitle: cn("Edit", rowData.name),
                     dialogContent: (
                         <DeductionUpdate
                             compensationTypes={
@@ -162,7 +162,7 @@ const columns: ColumnDef<deductionTypes>[] = [
                     name: "Delete",
                     dialogtitle: cn(
                         "Are you sure you want to delete ",
-                        rowData.deduction_name,
+                        rowData.name,
                         "?"
                     ),
                     dialogContent: (

@@ -16,14 +16,13 @@ const DeductionsStoreDialog = ({
     setData: any;
     errors: Partial<
         Record<
-            | "deduction_name"
+            | "name"
             | "shorthand"
-            | "amount"
             | "is_mandatory"
+            | "fixed_amount"
             | "remittance_percent"
             | "ceiling_amount"
-            | "deductionType"
-            | "compensation_links",
+            | "compensation_link",
             string
         >
     >;
@@ -38,14 +37,14 @@ const DeductionsStoreDialog = ({
         <div className="flex flex-col gap-2">
             <div className="grid grid-cols-2 gap-5">
                 <section>
-                    <Label className={errors.deduction_name && "text-red-600"}>
+                    <Label className={errors.name && "text-red-600"}>
                         Name of Deduction
                     </Label>
                     <Input
                         id="deduction_name"
                         type="text"
                         name="deduction_name"
-                        value={data.deduction_name}
+                        value={data.name}
                         onChange={(e) =>
                             setData(
                                 "deduction_name",
@@ -54,7 +53,7 @@ const DeductionsStoreDialog = ({
                         }
                     />
                     <InputError
-                        message={errors.deduction_name}
+                        message={errors.name}
                         className="mt-2"
                     />
                 </section>
@@ -90,15 +89,15 @@ const DeductionsStoreDialog = ({
                         <Label>Amount</Label>
                         <Input
                             disabled={selected !== "Fixed"}
-                            id="amount"
+                            id="fixed_amount"
                             type="number"
-                            name="amount"
+                            name="fixed_amount"
                             step="0.01"
                             min="1"
-                            value={data.amount}
-                            onChange={(e) => setData("amount", e.target.value)}
+                            value={data.fixed_amount}
+                            onChange={(e) => setData("fixed_amount", e.target.value)}
                         />
-                        <InputError message={errors.amount} className="mt-2" />
+                        <InputError message={errors.fixed_amount} className="mt-2" />
                     </section>
                 </div>
 

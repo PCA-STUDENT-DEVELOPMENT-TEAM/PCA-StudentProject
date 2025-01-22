@@ -58,11 +58,12 @@ export interface agencyTypes {
 
 export interface deductionTypes {
     deduction_code?: number;
-    deduction_name: string;
+    name: string;
     shorthand: string;
-    amount: number;
+    fixed_amount: number;
     is_mandatory: boolean;
     remittance_percent: number;
+    compensation_link: Array<string>;
     ceiling_amount: number;
 };
 

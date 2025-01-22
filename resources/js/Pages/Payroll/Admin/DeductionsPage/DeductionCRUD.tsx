@@ -12,6 +12,7 @@ import {
 } from "../../../../Components/ui/tabs";
 import IncludeExcludeBox from "../../../../Components/IncludeExcludeBox";
 import DeductionsStoreDialog from "./DeductionsStoreDialog";
+import { Row } from "react-day-picker";
 
 export function DeductionStore({
     openDialog,
@@ -149,18 +150,19 @@ export function DeductionUpdate({
     setOpenDialog: any;
 }) {
     const { data, put, setData, processing, errors, setError } = useForm({
-        name: "yes",
-        shorthand: "Nwpeor",
-        fixed_amount: 2000,
-        is_mandatory: false,
-        remittance_percent: 0.10,
-        ceiling_amount: 0.13,
-        compensation_links: ["nigga"] as Array<string>,
+        name: RowData.name,
+        shorthand: RowData.shorthand,
+        fixed_amount: RowData.fixed_amount,
+        is_mandatory: RowData.is_mandatory,
+        remittance_percent: RowData.remittance_percent,
+        ceiling_amount: RowData.ceiling_amount,
+        compensation_link: RowData.compensation_link,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        data.compensation_links = [...selectedItems];
+
+        data.compensation_link = [...selectedItems];
 
         if (selected == "Fixed") {
             data.remittance_percent = 0;
@@ -186,7 +188,7 @@ export function DeductionUpdate({
             return;
         }
 
-        put(route("update.deduction", 10), {
+        put(route("update.deduction", RowData.deduction_code), {
             onSuccess: () => {
                 toast(
                     <div className=" text-green-600 flex-col">
@@ -224,23 +226,23 @@ export function DeductionUpdate({
         });
     };
 
-    if (RowData.compensation_links != null) {
-        data.compensation_links = RowData.compensation_links
+    if (RowData.compensation_link != null) {
+        data.compensation_link = RowData.compensation_link
             .split(",")
             .map((item: string) => item.trim());
-    } else data.compensation_links = [];
+    } else data.compensation_link = [];
 
     const [baseItems, setBaseItems] = useState<Array<string>>([
         ...compensationTypes,
     ]);
     const [selectedItems, setSelectedItems] = useState<Array<string>>([
-        ...data.compensation_links,
+        ...data.compensation_link,
     ]);
 
     const [selected, setSelected] = useState<string>("");
 
     useEffect(() => {
-        if (data.amount > 0) {
+        if (data.fixed_amount > 0) {
             setSelected("Fixed");
         } else if (data.remittance_percent > 0 && data.ceiling_amount > 0) {
             setSelected("Remittance");
