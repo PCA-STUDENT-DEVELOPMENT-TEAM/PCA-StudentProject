@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('payroll_entries', function (Blueprint $table) {
             $table->id('payroll_entry_code');
 
-			$table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
-			$table->foreignId('employee_code')->constrained('employees')->references('employee_code');
-            
+            $table->foreignId('payroll_sheet_code')->constrained('payroll_sheets')->references('payroll_sheet_code');
+            $table->foreignId('employee_code')->constrained('employees')->references('employee_code');
+
             $table->string('current_position')->nullable();
-    
+
             $table->timestamps();
         });
     }

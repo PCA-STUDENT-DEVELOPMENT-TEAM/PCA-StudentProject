@@ -57,8 +57,7 @@ export function AgencyShareStore({
                         </div>
                         <div className="flex">
                             <span className="pl-6">
-                                Agency Share {data.name} has been
-                                Added
+                                Agency Share {data.name} has been Added
                             </span>
                         </div>
                     </div>,

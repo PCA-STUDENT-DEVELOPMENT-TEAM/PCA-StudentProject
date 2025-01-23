@@ -38,6 +38,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        
         /* Validating the user request. */
         $validated = $request->validate([
             'type' => 'required|unique:appointments',

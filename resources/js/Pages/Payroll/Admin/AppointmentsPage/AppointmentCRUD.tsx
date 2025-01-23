@@ -242,10 +242,7 @@ export function AppointmentUpdate({
                             ))}
                         </SelectContent>
                     </Select>
-                    <InputError
-                        message={errors.type}
-                        className="mt-2"
-                    />
+                    <InputError message={errors.type} className="mt-2" />
                 </div>
 
                 <div>

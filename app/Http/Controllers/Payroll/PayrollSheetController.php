@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Payroll;
 
 use App\Exports\Payrollexport;
 use App\Http\Controllers\Controller;
+use App\Models\AgencyShare;
 use App\Models\CompensationType;
+use App\Models\DeductionType;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Models\PayrollSheet;
+use App\Models\SignatoriesModel;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Exports\PayrollFunctionExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Inertia\Response;
-use Number;
 
 class PayrollSheetController extends Controller
 {
@@ -54,6 +57,25 @@ class PayrollSheetController extends Controller
         return response()->json(['data' => $compensation_types]);
     }
 
+    public function get_all_agency_types()
+    {
+        $agency_types = AgencyShare::all();
+
+        return response()->json(['data' => $agency_types]);
+    }
+
+    public function get_all_deduction_types()
+    {
+        $deduction_types = DeductionType::all();
+
+        return response()->json(['data' => $deduction_types]);
+    }
+
+    public function get_all_signatories()
+    {
+        $signatory_types = collect(DB::select('SELECT * FROM signatories'));
+        return response()->json(['data' => $signatory_types]);
+    }
     /**
      * Show the form for creating a new resource.
      */
