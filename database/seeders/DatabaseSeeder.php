@@ -494,14 +494,14 @@ class DatabaseSeeder extends Seeder
         DB::table('loan_types')->insert($loanTypes);
 
         // payroll entries====================================================
-        $payrollEntries = [];
-        for ($i = 1; $i <= 10; $i++) {
-            $payrollEntries[] = [
-                'employee_code' => $i,
-                'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
-            ];
-        }
-        DB::table('payroll_entries')->insert($payrollEntries);
+        // $payrollEntries = [];
+        // for ($i = 1; $i <= 10; $i++) {
+        //     $payrollEntries[] = [
+        //         'employee_code' => $i,
+        //         'payroll_sheet_code' => $faker->numberBetween(1, 10),  // Random payroll sheet code (1-10)
+        //     ];
+        // }
+        // DB::table('payroll_entries')->insert($payrollEntries);
 
         // applied_compensations===================================================================
         // $appliedCompensations = [];

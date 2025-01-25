@@ -21,7 +21,7 @@ return new class extends Migration
 
                 $table->foreignId('appointment_code')->constrained('appointments')->references('appointment_code')->nullable();
                 $table->foreignId('position_code')->constrained('positions')->references('position_code');
-                $table->foreignId('user_code')->constrained('users')->references('user_code');
+                $table->foreignId('user_code')->constrained('users')->references('id');
 
                 $table->string('employee_number')->unique();
                 $table->string('scanner_id')->unique();
