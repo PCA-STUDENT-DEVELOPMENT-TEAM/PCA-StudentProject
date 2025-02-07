@@ -31,12 +31,7 @@ export function OrderStore({ openDialog, formType }: { openDialog: any, formType
     <div>
       <form onSubmit={submit}>
         {/* Header Section */}
-        <div className="justify-center h-full bg-slate-200 rounded-[10px] p-5">
-          <h3 className="text-lg font-bold">Name: Charls Mcklein P. Gulle</h3>
-          <p className="text-sm text-gray-600">Job Title: Manager</p>
-          <p className="text-sm text-gray-600">Employee ID: 221-01212</p>
-          <p className="text-sm text-gray-600">Leave Credits: 212</p>
-        </div>
+
 
         {/* Conditional Rendering of Fields Based on formType */}
         {formType === "leave" ? (
@@ -257,12 +252,7 @@ export function OrderRead({ RowData }: { RowData: any }) {
 
       <form onSubmit={submit}>
 
-        <div className=" justify-center h-full bg-slate-200 rounded-[10px] p-5">
-          <h3 className="text-lg font-bold ">Name: Charls Mcklein P. Gulle</h3>
-          <p className="text-sm text-gray-600">Job Title: Manager</p>
-          <p className="text-sm text-gray-600">Employee ID: 221-01212</p>
-          <p className="text-sm text-gray-600">Leave Credits: 212</p>
-        </div>
+      
         {RowData.employee_code && (
           <div>
             <Label htmlFor="empl" className={errors.employee_code && "text-red-600"}>
