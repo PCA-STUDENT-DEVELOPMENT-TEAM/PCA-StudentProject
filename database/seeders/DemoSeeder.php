@@ -88,14 +88,14 @@ class DemoSeeder extends Seeder
 		]);
 
 		DB::table('employees')->insert([
-			'employee_number' => '8',
-			'first_name' => 'Clads',
+			'employee_number' => '9',
+			'first_name' => 'Claud',
 			'middle_name' => 'Arshad',
 			'last_name' => 'Alingasa',
 			'name_extension' => NULL,
 			'salary_type' => 'Fixed',
 			'salary_step' => 1,
-			'device_bio_id' => '1',
+			'device_bio_id' => '9',
 			'position_code' => 1,
 			'appointment_code' => 1,
 			'station_code' => 1

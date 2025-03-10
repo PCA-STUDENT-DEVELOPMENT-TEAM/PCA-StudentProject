@@ -29,26 +29,5 @@ NOTE: uncomment out extension=gd in your php.ini file for this to work
 - composer require maatwebsite/excel --with-all-dependencies
   
 
-NOTE:
-
-FOR Members that were added before 23/10/2024 . Run git remote set-url origin https://github.com/jlibdev/PCA-StudentProject.git before starting.
-Repo has been renamed
-CHARLS
-
-
-FRONTEND COMPONENTS NOTES:
-================================================================
-
-
-<DatePicker></DatePicker>
-================================================================
-Specific Date Picker
-Props : date , setDate => Type React.useState<Date>()
-
-Sample Use:
-
-const {enddate,  setEndDate} = React.useState<Date>()
-<DatePicker date={enddate} setDate={setEndDate} />
-===============================================================
 
 

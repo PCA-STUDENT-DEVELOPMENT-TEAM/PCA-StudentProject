@@ -14,7 +14,7 @@ import {
 import { File, MoreHorizontal } from "lucide-react";
 import { DataTable } from "@/Components/DataTable";
 import { Input } from "@/Components/ui/input";
-import DialogMenu from "@/Components/Dialog";
+import PaginationTable from "@/Components/Pagination";
 import {
     Select,
     SelectContent,
@@ -25,38 +25,38 @@ import {
 import { addDays } from "date-fns";
 import React, { useState } from "react";
 import { DateRange } from "react-day-picker";
-import PaginationTable from "@/Components/Pagination";
 import {
-
     OrderRead,
     OrderStore,
     OrderUpdate,
 } from "@/Components/CrudComponents/OrderCrud";
+import DialogMenu from "@/Components/Dialog";
 import { useTable } from "@/hooks/BioAdmin/useTable";
 import DropdownDialog from "@/Components/DropdownDialog";
 import { cn } from "@/lib/utils";
-
 //  Set accepted column types
 type columnTypes = {
-    travel_order_code: number;
+    leave_request_code: number;
+    employee_code: number;
+    approver_code: number;
     description: string;
+    leave_request_type: string;
     start_date: string;
     end_date: string;
     file_date: string;
     is_approved: boolean;
-    type: string;
-    updated_at: string | null;
     created_at: string | null;
+    updated_at: string | null;
 };
 
 // Generate the headers for the columns
 const columns: ColumnDef<columnTypes>[] = [
-    { accessorKey: "description", header: "Employee ID" },
-    // { accessorKey: "name", header: "Name" },
-    { accessorKey: "start_date", header: "Start Date" },
-    { accessorKey: "end_date", header: "End Date" },
-    { accessorKey: "type", header: "Purpose of Travel" },
-    { accessorKey: "description", header: "Venue Destination" },
+    { accessorKey: "employee_code", header: "Employee ID" },
+    { accessorKey: "name", header: "Name" },
+    {
+        accessorKey: "type", header: "Leave Type"
+    },
+    { accessorKey: "file_date", header: "Applied On" },
     { accessorKey: "is_approved", header: "Status" },
     {
         id: "actions",
@@ -67,7 +67,7 @@ const columns: ColumnDef<columnTypes>[] = [
                 {
                     tag: "1",
                     name: "View Details",
-                    dialogtitle: cn("View Travel Order Details"),
+                    dialogtitle: cn("View Leave Details"),
                     dialogContent: <OrderRead RowData={rowData}></OrderRead>,
                 },
 
@@ -93,33 +93,28 @@ const columns: ColumnDef<columnTypes>[] = [
     },
 
 
-
 ];
 
 
-export default function TravelOrder() {
-    const { travelOrderData } = usePage<{ travelOrderData: ColumnTypes[] }>().props;
-
+export default function LeaveOrder() {
+    const { leaveData } = usePage<{ leaveData: ColumnType[] }>().props;
+    console.log(leaveData);
     const { table, globalFilter, setGlobalFilter } = useTable({
-        data: travelOrderData,
+        data: leaveData,
         columns,
     });
-
-    const [statusFilter, setStatusFilter] = useState<string>("all");
-
     const [openDialog, setOpenDialog] = useState(false);
     const [date, setDate] = React.useState<DateRange | undefined>({
         from: new Date(),
         to: addDays(new Date(), 20),
     });
-
     return (
         <AuthenticatedLayoutAdmin
             header={<h2>{usePage().component.split("/")[1]}</h2>}
         >
             <Head title="AttendanceRecord" />
 
-            <BodyContentLayout headerName={"Travel Order"}>
+            <BodyContentLayout headerName={"Leave Order"}>
 
 
                 <div className="flex mb-5 justify-between">
@@ -137,15 +132,14 @@ export default function TravelOrder() {
                         </section>
                         <section className="flex gap-7 w-full justify-end">
                             <div>
-                                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                <Select>
                                     <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Travel Order Status" />
+                                        <SelectValue placeholder="Leave Status" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="all">All</SelectItem>
-                                        <SelectItem value="pending">Pending</SelectItem>
-                                        <SelectItem value="approved">Approved</SelectItem>
-                                        <SelectItem value="declined">Declined</SelectItem>
+                                        <SelectItem value="flexi">Dark</SelectItem>
+                                        <SelectItem value="regular">Regular</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -157,17 +151,16 @@ export default function TravelOrder() {
                                 trigger={
                                     <section className="flex gap-1 bg-baseYellow text-black items-center justify-right p-2 rounded-[10px] pl-3 pr-5">
                                         <File size={15} />
-                                        Create Travel Order
+                                        Create Leave Order
                                     </section>
                                 }
-                                title="New Travel Order"
-                                description="Add New Travel Order"
+                                title="New Leave Order"
+                                description="Add New Leave Order"
                             >
                                 <OrderStore
                                     openDialog={() =>
-                                        setOpenDialog(!openDialog)
-                                    }
-                                    formType="travel"
+                                        setOpenDialog(!openDialog,)
+                                    } formType="leave"
                                 />
                             </DialogMenu>
                         </section>
@@ -181,6 +174,7 @@ export default function TravelOrder() {
                         rowStyle="odd:bg-white even:bg-transparent text-center"
                     ></DataTable>
                     <PaginationTable table={table}></PaginationTable>
+
                 </div>
             </BodyContentLayout>
         </AuthenticatedLayoutAdmin>

@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         // users =================================================================
         $users = [];
-        
+
         for ($i = 1; $i <= 50; $i++) {
             $users[] = [
                 'name' => "User $i",
@@ -32,9 +32,9 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ];
         }
-        
+
         DB::table('users')->insert($users);
-        
+
         // for fakeh data ========================================================
         $faker = Faker::create();
 
@@ -283,14 +283,14 @@ class DatabaseSeeder extends Seeder
 
         //Signatory =========================================================================
 
-        $signatoryData=[];
-        for($i = 1; $i<= 7;$i++){
+        $signatoryData = [];
+        for ($i = 1; $i <= 7; $i++) {
             $signatoryData[] = [
-                'preparer_code'=>$faker->numberBetween(1,49),
-                'recommender_code'=>$faker->numberBetween(1,49),
-                'certifier_code'=>$faker->numberBetween(1,49),
-                'approver_code'=>$faker->numberBetween(1,49),
-                'name'=>$faker->word
+                'preparer_code' => $faker->numberBetween(1, 49),
+                'recommender_code' => $faker->numberBetween(1, 49),
+                'certifier_code' => $faker->numberBetween(1, 49),
+                'approver_code' => $faker->numberBetween(1, 49),
+                'name' => $faker->word
             ];
         }
         DB::table('signatories')->insert($signatoryData);
@@ -298,7 +298,7 @@ class DatabaseSeeder extends Seeder
         // leave_requests =========================================================================
         $leaveRequests = [];
         $leaveTypes = ['Sick Leave', 'Vacation Leave', 'Emergency Leave', 'Maternity Leave', 'Paternity Leave'];
-       # $statuses = ['Pending', 'Approved', 'Rejected'];
+        # $statuses = ['Pending', 'Approved', 'Rejected'];
 
         for ($i = 0; $i < 10; $i++) {
             $dateFiled = $faker->dateTimeBetween('-1 year', 'now')->format('Y-m-d');
@@ -306,7 +306,7 @@ class DatabaseSeeder extends Seeder
             $endDate = $faker->dateTimeBetween($startDate, '+1 month')->format('Y-m-d');
             $leaveType = $faker->randomElement($leaveTypes);
             $leaveDescription = $faker->boolean(80) ? $faker->sentence() : 'N/A'; // 80% chance of having a description
-          #  $status = $faker->randomElement($statuses);
+            #  $status = $faker->randomElement($statuses);
             $employeeCode = random_int(1, 50);
             $approverCode = random_int(1, 10);
 
@@ -392,17 +392,17 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
 
 
-             // Get three random keys
+            // Get three random keys
             $randomKeys = array_rand($compensation_names_for_sheets, 3);
 
-             // Extract the random names using the keys
+            // Extract the random names using the keys
             $three_random = array_map(function ($key) use ($compensation_names_for_sheets) {
                 return $compensation_names_for_sheets[$key];
             }, $randomKeys);
 
-             // Combine into a single string separated by commas
+            // Combine into a single string separated by commas
 
-            $payrollName = $faker->unique()->word. ' Payroll';
+            $payrollName = $faker->unique()->word . ' Payroll';
             $payrollType = $faker->randomElement(['Regular', 'Overtime', 'Bonus', 'Holiday']);
             $startDate = $faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d');
             $endDate = (new DateTime($startDate))->modify('+' . $faker->numberBetween(1, 5) . ' days')->format('Y-m-d');

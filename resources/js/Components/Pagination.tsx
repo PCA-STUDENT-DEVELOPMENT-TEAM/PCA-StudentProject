@@ -7,10 +7,11 @@ import {
     PaginationLink,
     Pagination,
 } from "./ui/pagination";
+import { cn } from "@/lib/utils";
 
 const PaginationTable = ({ table }: { table: any }) => {
     return (
-        <Pagination className="flex justify-end items-end mb-3">
+        <Pagination className="flex justify-end items-end my-3">
             <PaginationContent>
                 <PaginationItem>
                     <Button
@@ -22,17 +23,21 @@ const PaginationTable = ({ table }: { table: any }) => {
                         Previous
                     </Button>
                 </PaginationItem>
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationLink>
-                        {table.getState().pagination.pageIndex + 1}
-                    </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
+                {table.getPageCount() > 1 &&
+                    Array.from({ length: table.getPageCount() }, (_, index) => (
+                        <PaginationItem key={index}>
+                            <PaginationLink
+                                onClick={() => table.setPageIndex(index)}
+                                className={cn(
+                                    table.getState().pagination.pageIndex === index &&
+                                    "font-bold bg-primary text-white"
+                                )}
+                            >
+                                {index + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    ))}
+
                 <Button
                     onClick={table.nextPage}
                     className="bg-transparent text-black hover:bg-transparent w-30 p-2"

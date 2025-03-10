@@ -6,8 +6,10 @@ import {
 } from "@/Components/Sidenavbar";
 import {
     BookOpen,
+    CalendarDays,
     Cog,
     Files,
+    FileText,
     HandCoins,
     HeartHandshake,
     LayoutDashboard,
@@ -59,7 +61,7 @@ export default function Authenticated({
     // or if gusto mo lain pag butang rag or sa icon sa Item nga interface
     const links: link[] = [
         {
-            title: "BIOMETRICS SYSTEM",
+            title: "EMPLOYEE MNGT SYSTEM",
             items: [
                 {
                     label: "Dashboard",
@@ -67,12 +69,12 @@ export default function Authenticated({
                     icon: LayoutDashboard,
                 },
                 {
-                    label: "Attendance List",
+                    label: "Attendance Report",
                     url: "bioadmin.attendancelists",
                     icon: Users,
                 },
                 {
-                    label: "Attendance Records",
+                    label: "Employee DTR",
                     url: "bioadmin.attendancerecords",
                     icon: Files,
                 },
@@ -80,6 +82,21 @@ export default function Authenticated({
                     label: "Manage Users",
                     url: "bioadmin.manageusers",
                     icon: Users,
+                },
+                {
+                    label: "T.O. Requests",
+                    url: "bioadmin.travelorder",
+                    icon: FileText,
+                },
+                {
+                    label: "L.O. Requests",
+                    url: "bioadmin.leaveorder",
+                    icon: FileText,
+                },
+                {
+                    label: "Holiday Creation",
+                    url: "bioadmin.holidaycreation",
+                    icon: CalendarDays,
                 },
             ],
         },
@@ -90,15 +107,13 @@ export default function Authenticated({
 
     const [navStatus, setnavStatus] = useState(false);
     const [email, setEmail] = useState<string>('');
+    useEffect(() => {
+        let display_email = localStorage.getItem('email');
 
-	useEffect( () => {
-		let display_email = localStorage.getItem('email');
-
-		if (display_email)
-		{
-			setEmail(display_email);
-		}
-	});
+        if (display_email) {
+            setEmail(display_email);
+        }
+    });
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -144,11 +159,11 @@ export default function Authenticated({
                     {/* Mao ni ang pag generate sa header */}
                     <div
                         className={cn(
-                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-between",
+                            " transition-all duration-200 ease-in-out py-2 px-6 sm:px-6 flex gap-3 z-40 justify-end",
                             navStatus ? "ml-64 sm:ml-16" : "ml-16 sm:ml-64"
                         )}
                     >
-                        <div className="flex items-center gap-3">
+                        {/* <div className="flex items-center gap-3">
                             <PanelLeft
                                 onClick={() => setnavStatus(!navStatus)}
                             />
@@ -160,7 +175,7 @@ export default function Authenticated({
                             >
                                 {header}
                             </span>
-                        </div>
+                        </div> */}
                         <div className="flex items-center gap-3">
                             {/* TODO : Add a welcome to the user : Dili nata mag search bar kay taga page tag duha duha nag search bar niya no scroll man ato page*/}
                             <h1 className="hidden lg:block">

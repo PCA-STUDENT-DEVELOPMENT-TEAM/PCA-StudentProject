@@ -16,10 +16,13 @@ class DailyTimeEntry extends Model
 		'time_out_am',
 		'time_in_pm',
 		'time_out_pm',
+		'overtime_in',
+		'overtime_out',
 		'employee_code'
 	];
 
-	public function employee() {
+	public function employee()
+	{
 		return $this->belongsTo(Employee::class);
 	}
 }

@@ -17,6 +17,7 @@ class Employee extends Model
 		'middle_name',
 		'last_name',
 		'name_extension',
+		'device_bio_id',
 		'salary_type',
 		'salary_step',
 		'scanner_id',

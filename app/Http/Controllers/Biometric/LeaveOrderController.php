@@ -3,27 +3,22 @@
 namespace App\Http\Controllers\Biometric;
 
 use App\Http\Controllers\Controller;
-use App\Models\DailyTimeEntry;
+use App\Models\LeaveRequest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Models\Employee;
 
-
-class AttendanceRecordController extends Controller
+class LeaveOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        /* Fetching all the entries stored within the database. */
-        $tableData = DailyTimeEntry::all();
-        $employees = Employee::with('position')->get();
+        $leaveData = LeaveRequest::all();
 
-        return Inertia::render('BioAdmin/AttendanceRecord', [
-            'tableData' => $tableData,
-            'employees' => $employees,
-            'message' => 'All the DTR entries have been retrieved successfully.'
+        return Inertia::render('BioAdmin/LeaveOrder', [
+            'leaveData' => $leaveData,
+            'message' => 'All the leave data have been retrieved successfully.'
         ]);
     }
 

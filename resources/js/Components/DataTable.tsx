@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { sslProfileTypes } from "@/types/payrollPagesTypes";
 
 import { ColumnDef, flexRender, Table } from "@tanstack/react-table";
+import { useEffect } from "react";
 
 interface DataTableProps<TData, TValue> {
     headerStyle?: string;
@@ -17,6 +18,7 @@ interface DataTableProps<TData, TValue> {
     table: Table<any>;
     onMouseEnter?: any;
     className?: string;
+    pageSize?: number;
 }
 
 export function DataTable<TData, TValue>({
@@ -25,7 +27,12 @@ export function DataTable<TData, TValue>({
     table,
     className,
     onMouseEnter,
+    pageSize = 10,
 }: DataTableProps<TData, TValue>) {
+    useEffect(() => {
+        table.setPageSize(pageSize);
+    }, [table, pageSize]);
+
     return (
         <div className="h-full">
             <div
@@ -35,19 +42,18 @@ export function DataTable<TData, TValue>({
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup: any) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header: any) => {
+                                {headerGroup.headers.map((header: any, index: number) => {
                                     return (
                                         <TableHead
                                             key={header.id}
-                                            className={headerStyle}
+                                            className={'text-center'} // Tailwind class for margin-left
                                         >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
-                                                      header.column.columnDef
-                                                          .header,
-                                                      header.getContext()
-                                                  )}
+                                                    header.column.columnDef.header,
+                                                    header.getContext()
+                                                )}
                                         </TableHead>
                                     );
                                 })}
@@ -61,16 +67,11 @@ export function DataTable<TData, TValue>({
                                     onDoubleClick={() => onMouseEnter(row)}
                                     className={rowStyle}
                                     key={row.id}
-                                    data-state={
-                                        row.getIsSelected() && "selected"
-                                    }
+                                    data-state={row.getIsSelected() && "selected"}
                                 >
                                     {row.getVisibleCells().map((cell: any) => (
                                         <TableCell key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                         </TableCell>
                                     ))}
                                 </TableRow>

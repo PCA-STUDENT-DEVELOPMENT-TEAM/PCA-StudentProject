@@ -1,33 +1,36 @@
 <?php
 
-namespace App\Http\Controllers\Biometric;
+namespace App\Console\Commands;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Console\Command;
+use App\Libraries\ZKLibrary;
 use App\Models\DailyTimeEntry;
 use App\Models\Employee;
-use App\Libraries\ZKLibrary;
 use DateTime;
 use Exception;
 
-class AttendanceListController extends Controller
+
+class GenerateLogCommand extends Command
 {
     /**
-     * Display a listing of the resource.
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    public function index()
-    {
-		/* Fetching all the entries stored within the database. */
-		$allData = DailyTimeEntry::all();
+    protected $signature = 'app:generate';
 
-		/* Returning a success message to the user. */
-		return Inertia::render('BioAdmin/AttendanceList', ['allData' => $allData, 'message' => 'All the DTR entries have been retrieved successfully.']);
-    }
-
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Add logs from the device to db';
     protected $zk;
-    
-    public function fetchLogs()
+
+    /**
+     * Execute the console command.
+     */
+    public function handle()
     {
         $this->zk = new ZKLibrary(env('BIOM_IP'), env('BIOM_PORT'));
 
@@ -180,52 +183,5 @@ class AttendanceListController extends Controller
         }
 
         return;
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

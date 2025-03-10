@@ -6,6 +6,7 @@ use App\Http\Controllers\Biometric\AttendanceRecordController;
 use App\Http\Controllers\Biometric\ManageUserController;
 use App\Http\Controllers\Payroll\PayrollSheetController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 
 // Controllers: Payroll
@@ -23,23 +24,39 @@ use App\Http\Controllers\Payroll\PayrollController;
 // Controllers: Biometrics
 use App\Http\Controllers\Biometrics\DailyTimeEntryController;
 use App\Http\Controllers\PageController;
-use Inertia\Inertia;
+use App\Http\Controllers\Biometric\HolidayCreationController;
+use App\Http\Controllers\Biometric\LeaveOrderController;
+use App\Http\Controllers\Biometric\TravelOrderController;
 
-// ->middleware(['auth'])
-
+Route::get('/autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
 
 // SUBDOMAIN FOR BIOADMIN
 Route::domain('bioadmin.' . env('APP_URL'))->group(
     function () {
+        // Route::prefix('admin')->middleware(['auth'], ['role']=="admin)->group( 
         Route::prefix('admin')->middleware(['auth'])->group(
             function () {
+                // bioadmin.localhost:8000/admin/dashboard -> route
                 Route::get('dashboard', [DashboardController::class, 'index'])->name('bioadmin.dashboard');
-                Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists');
-                Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs');
-                Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords');
+                Route::get('attendancelists', [AttendanceListController::class, 'index'])->name('bioadmin.attendancelists'); //attendance report
+                Route::get('fetchlogs', [AttendanceListController::class, 'fetchLogs'])->name('bioadmin.fetchLogs'); // dinako oy
+                // Route::get('autogenerate-today', [DailyTimeEntryController::class, 'generateNewBatch'])->name('generate-DTRs'); ala namani
+                Route::get('attendancerecords', [AttendanceRecordController::class, 'index'])->name('bioadmin.attendancerecords'); //employeedtr
+                Route::get('attendancecharls', [AttendanceRecordController::class, 'charls'])->name('charls.bioadmin.attendancerecords'); //employeedtr
                 Route::get('manageusers', [ManageUserController::class, 'index'])->name('bioadmin.manageusers');
+                // Route::post('manageusers', [ManageUserController::class, 'store'])->name('store.bioadmin.manageusers');
+                Route::get('travelorder', [TravelOrderController::class, 'index'])->name('bioadmin.travelorder');
+                Route::post('travelorder', [TravelOrderController::class, 'store'])->name('store.bioadmin.travelorder');
+                Route::get('leaveorder', [LeaveOrderController::class, 'index'])->name('bioadmin.leaveorder');
+                Route::get('holidaycreation', [HolidayCreationController::class, 'index'])->name('bioadmin.holidaycreation');
+                Route::post('holidaycreation', [HolidayCreationController::class, 'store'])->name('store.bioadmin.holidaycreation');
+                Route::get('holidayistitik', [HolidayCreationController::class, 'istitik'])->name('istitik.bioadmin.holidaycreation');
             }
         );
+        // Route::prefix('superadmin')->middleware(['auth'], ['role']=="superadmin")->group( 
+        // bioadmin.localhost:8000/superadmin/dashboard -> route
+        // Route::prefix('employee')->middleware(['auth'], ['role']=="employee")->group( 
+
     }
 );
 

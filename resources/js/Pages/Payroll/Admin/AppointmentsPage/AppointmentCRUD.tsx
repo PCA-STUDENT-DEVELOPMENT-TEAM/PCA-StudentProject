@@ -107,36 +107,36 @@ export function AppointmentStore({
 
                 {/* second div */}
 
-        <div>
-            <Label
-                htmlFor="compensation_code"
-                className={errors.compensation_name && "text-red-600"}
-                >
-                    Compensation Code
-                </Label>
-                <Select
-                    id="compensation_name"
+                <div>
+                    <Label
+                        htmlFor="compensation_code"
+                        className={errors.compensation_name && "text-red-600"}
+                    >
+                        Compensation Code
+                    </Label>
+                    <Select
+                        id="compensation_name"
                     // value={data.compensation_code || ""}
                     // onValueChange={(value) => setData("compensation_code", value)}
-                >
-                <SelectTrigger>
-                    <SelectValue placeholder="Select a compensation type" />  {/* Placeholder visible when no value is selected */}
-                </SelectTrigger>
-                <SelectContent>
-            {
-                compensationTypes.map(compensation_name => {
-                    return (  // Add return here
-                        <SelectItem onMouseDown={()=> setData("compensation_name" , compensation_name)} key={compensation_name} value={compensation_name}>
-                            {compensation_name}
-                        </SelectItem>
-                    );
-                })
-            }
-        </SelectContent>
-    </Select>
-    <InputError message={errors.compensation_name} className="mt-2" />
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select a compensation type" />  {/* Placeholder visible when no value is selected */}
+                        </SelectTrigger>
+                        <SelectContent>
+                            {
+                                compensationTypes.map(compensation_name => {
+                                    return (  // Add return here
+                                        <SelectItem onMouseDown={() => setData("compensation_name", compensation_name)} key={compensation_name} value={compensation_name}>
+                                            {compensation_name}
+                                        </SelectItem>
+                                    );
+                                })
+                            }
+                        </SelectContent>
+                    </Select>
+                    <InputError message={errors.compensation_name} className="mt-2" />
 
-    </div>
+                </div>
 
 
                 <div className="flex items-center gap-3">
